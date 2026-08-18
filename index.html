@@ -182,4 +182,48 @@ render();
 const revealObserver=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.style.opacity="1";e.target.style.transform="translateY(0)";revealObserver.unobserve(e.target)}})},{threshold:.08});
 document.querySelectorAll("section .section-head,.benefit,.career>div,.cta").forEach(el=>{el.style.opacity="0";el.style.transform="translateY(18px)";el.style.transition="opacity .65s ease,transform .65s ease";revealObserver.observe(el)});
 </script>
+ <script>
+function loadVacancies() {
+    const vacancies = JSON.parse(
+        localStorage.getItem("ktungsten_vacancies") || "[]"
+    );
+
+    const container = document.getElementById("jobsList");
+
+    if (!container) return;
+
+    if (vacancies.length === 0) {
+        container.innerHTML = `
+            <div style="padding:40px;text-align:center;color:#8fa3bd;">
+                Hozircha ochiq vakansiyalar mavjud emas.
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = vacancies
+        .filter(v => v.status === "active")
+        .map(v => `
+            <div class="vacancy-card">
+                <div>
+                    <h3>${v.title}</h3>
+                    <p>📍 ${v.location}</p>
+                    <p>💼 ${v.type}</p>
+                    <p>📊 Tajriba: ${v.experience || "Talab qilinmaydi"}</p>
+                    <p>💰 Maosh: ${v.salary || "Suhbat asosida"}</p>
+                </div>
+
+                <div>
+                    <p>${v.description || ""}</p>
+                    <button onclick="alert('Vakansiyaga murojaat qilish uchun Aloqa bo‘limiga o‘ting.')">
+                        Batafsil
+                    </button>
+                </div>
+            </div>
+        `)
+        .join("");
+}
+
+document.addEventListener("DOMContentLoaded", loadVacancies);
+</script>
 </body></html>
