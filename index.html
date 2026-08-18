@@ -123,15 +123,51 @@ function openDetail(id){
  document.getElementById("detailTitle").textContent=v.title;
  document.getElementById("detailDesc").textContent=v.desc;
  document.getElementById("detailMeta").innerHTML=`<span class="meta-pill">⌖ ${v.location}</span><span class="meta-pill">◷ ${v.exp}</span><span class="meta-pill">▣ ${v.type}</span>`;
- document.getElementById("detailTasks").innerHTML=v.tasks.map(x=>`<li>${x}</li>`).join("");
- document.getElementById("detailRequirements").innerHTML=v.req.map(x=>`<li>${x}</li>`).join("");
- document.getElementById("detailApply").onclick=()=>{closeDetail();openApplication(v.title)};
- document.getElementById("vacancyModal").classList.add("show");
-}
-function closeDetail(){document.getElementById("vacancyModal").classList.remove("show")}
-function openApplication(t){document.getElementById("modalTitle").textContent=t;document.getElementById("job").value=t;document.getElementById("modal").classList.add("show")}
-function closeModal(){document.getElementById("modal").classList.remove("show")}
 document.getElementById("form").addEventListener("submit",async e=>{
+  e.preventDefault();
+
+  const fd=new FormData();
+
+  [["name","name"],
+   ["phone","phone"],
+   ["birth","birth"],
+   ["address","address"],
+   ["education","edu"],
+   ["experience","experience"],
+   ["about","aboutme"],
+   ["job","job"]
+  ].forEach(([k,id])=>{
+    fd.append(k,document.getElementById(id).value);
+  });
+
+  const file=document.querySelector('#form input[type="file"]');
+
+  if(file.files[0]){
+    fd.append("cv",file.files[0]);
+  }
+
+  try{
+    const r=await fetch("/api/applications",{
+      method:"POST",
+      body:fd
+    });
+
+    const d=await r.json();
+
+    if(!r.ok){
+      alert(d.error||"Arizani yuborishda xatolik.");
+      return;
+    }
+
+    alert("Arizangiz qabul qilindi!");
+    closeModal();
+    e.target.reset();
+
+  }catch(error){
+    console.error(error);
+    alert("Server bilan bog‘lanishda xatolik.");
+  }
+});
  e.preventDefault();
  const fd=new FormData();
  [["name","name"],["phone","phone"],["birth","birth"],["address","address"],["education","edu"],["experience","experience"],["about","aboutme"],["job","job"]].forEach(([k,id])=>fd.append(k,document.getElementById(id).value));
