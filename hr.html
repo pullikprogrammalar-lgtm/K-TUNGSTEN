@@ -1,23 +1,1224 @@
-<!doctype html>
-<html lang="uz"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>K-TUNGSTEN HR</title>
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>K-TUNGSTEN — HR Panel</title>
+
 <style>
-body{margin:0;background:#030d1d;color:#f5f8fc;font-family:Arial,sans-serif}.wrap{width:min(1200px,94%);margin:35px auto}.head{display:flex;justify-content:space-between;align-items:center;gap:15px}.head h1{margin:0}.sub{color:#8ea4bf;font-size:13px}.bar{margin:25px 0;padding:15px;background:#071a34;border:1px solid #173d67;border-radius:12px;display:flex;gap:10px;flex-wrap:wrap}input,select,button{background:#06172e;color:white;border:1px solid #21496f;border-radius:8px;padding:11px}button{cursor:pointer;background:#1265dc;border-color:#1265dc;font-weight:700}.table{overflow:auto;background:#06172e;border:1px solid #173d67;border-radius:12px}table{width:100%;border-collapse:collapse;min-width:900px}th,td{padding:13px;border-bottom:1px solid #16395f;text-align:left;font-size:12px}th{color:#5ca0ff}.pill{padding:5px 8px;border-radius:20px;background:#102e50}.empty{padding:30px;color:#8297b0}.cv{color:#4e9aff}
-</style></head><body><div class="wrap">
-<div class="head"><div><h1>K-TUNGSTEN HR</h1><div class="sub">Nomzodlar boshqaruv paneli</div></div><button onclick="load()">↻ Yangilash</button></div>
-<div class="bar"><input id="key" type="password" placeholder="Admin kaliti" style="min-width:260px"><input id="q" placeholder="Nomzod yoki vakansiya..." style="min-width:260px"><select id="status"><option value="">Barcha statuslar</option><option>Yangi</option><option>Ko‘rib chiqilmoqda</option><option>Suhbatga chaqirildi</option><option>Qabul qilindi</option><option>Rad etildi</option></select><button onclick="load()">Kirish</button></div>
-<div class="table"><table><thead><tr><th>#</th><th>Nomzod</th><th>Vakansiya</th><th>Telefon</th><th>Tajriba</th><th>Sana</th><th>CV</th><th>Status</th></tr></thead><tbody id="rows"></tbody></table><div id="empty" class="empty">Admin kalitini kiriting.</div></div>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #080d18;
+    color: #f5f7fb;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    width: min(1250px, 94%);
+    margin: 30px auto;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+
+.logo h1 {
+    margin: 0;
+    font-size: 28px;
+}
+
+.logo p {
+    margin: 6px 0 0;
+    color: #9aa8bd;
+}
+
+button {
+    border: 0;
+    border-radius: 8px;
+    padding: 11px 17px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-blue {
+    background: #1672ff;
+    color: white;
+}
+
+.btn-green {
+    background: #19a974;
+    color: white;
+}
+
+.btn-red {
+    background: #d93636;
+    color: white;
+}
+
+.btn-gray {
+    background: #273247;
+    color: white;
+}
+
+.card {
+    background: #101827;
+    border: 1px solid #26344a;
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.stat {
+    background: #111c2d;
+    border: 1px solid #26344a;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.stat-title {
+    color: #9aa8bd;
+    font-size: 14px;
+}
+
+.stat-number {
+    font-size: 30px;
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+.controls {
+    display: grid;
+    grid-template-columns: 1fr 220px auto;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 13px;
+    border-radius: 8px;
+    border: 1px solid #34445d;
+    background: #0b1321;
+    color: white;
+    outline: none;
+}
+
+input:focus,
+select:focus {
+    border-color: #1672ff;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 900px;
+}
+
+th {
+    text-align: left;
+    color: #9aa8bd;
+    font-size: 13px;
+    padding: 14px;
+    border-bottom: 1px solid #29374d;
+}
+
+td {
+    padding: 14px;
+    border-bottom: 1px solid #1e2a3c;
+}
+
+tr:hover {
+    background: #121f33;
+}
+
+.status {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.status-active {
+    background: #123c2d;
+    color: #4ce0a4;
+}
+
+.status-vacation {
+    background: #3d3211;
+    color: #ffd45a;
+}
+
+.status-fired {
+    background: #3b171b;
+    color: #ff7777;
+}
+
+.actions {
+    display: flex;
+    gap: 7px;
+}
+
+.actions button {
+    padding: 7px 10px;
+    font-size: 12px;
+}
+
+.empty {
+    text-align: center;
+    padding: 50px;
+    color: #9aa8bd;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.75);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-box {
+    width: min(600px, 100%);
+    max-height: 90vh;
+    overflow-y: auto;
+    background: #101827;
+    border: 1px solid #30405a;
+    border-radius: 15px;
+    padding: 25px;
+}
+
+.modal-box h2 {
+    margin-top: 0;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 7px;
+    color: #aebbd0;
+    font-size: 13px;
+}
+
+.full {
+    grid-column: 1 / -1;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.login-screen {
+    position: fixed;
+    inset: 0;
+    background: #080d18;
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.login-box {
+    width: min(420px, 100%);
+    background: #101827;
+    border: 1px solid #2b3b55;
+    border-radius: 16px;
+    padding: 30px;
+}
+
+.login-box h1 {
+    margin-top: 0;
+}
+
+.login-box p {
+    color: #9aa8bd;
+}
+
+.error {
+    color: #ff7777;
+    margin-top: 10px;
+    display: none;
+}
+
+@media (max-width: 800px) {
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .controls {
+        grid-template-columns: 1fr;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 500px) {
+    .stats {
+        grid-template-columns: 1fr;
+    }
+
+    .container {
+        width: 92%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+<div class="login-screen" id="loginScreen">
+
+    <div class="login-box">
+
+        <h1>🔐 K-TUNGSTEN</h1>
+
+        <p>HR paneliga kirish</p>
+
+        <input
+            type="password"
+            id="adminPassword"
+            placeholder="Admin kaliti"
+            onkeydown="if(event.key==='Enter') login()"
+        >
+
+        <br><br>
+
+        <button class="btn-blue" onclick="login()" style="width:100%;">
+            Kirish
+        </button>
+
+        <div class="error" id="loginError">
+            Admin kaliti noto‘g‘ri!
+        </div>
+
+    </div>
+
 </div>
+
+
+<!-- MAIN -->
+
+<div class="container">
+
+    <div class="header">
+
+        <div class="logo">
+
+            <h1>K-TUNGSTEN</h1>
+
+            <p>HR — xodimlar boshqaruv paneli</p>
+
+        </div>
+
+        <div>
+
+            <button class="btn-green" onclick="openAddModal()">
+                + Xodim qo‘shish
+            </button>
+
+            <button class="btn-gray" onclick="logout()">
+                Chiqish
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- STATISTICS -->
+
+    <div class="stats">
+
+        <div class="stat">
+            <div class="stat-title">Jami xodimlar</div>
+            <div class="stat-number" id="totalCount">0</div>
+        </div>
+
+        <div class="stat">
+            <div class="stat-title">Faol xodimlar</div>
+            <div class="stat-number" id="activeCount">0</div>
+        </div>
+
+        <div class="stat">
+            <div class="stat-title">Ta'tilda</div>
+            <div class="stat-number" id="vacationCount">0</div>
+        </div>
+
+        <div class="stat">
+            <div class="stat-title">Ishdan ketgan</div>
+            <div class="stat-number" id="firedCount">0</div>
+        </div>
+
+    </div>
+
+
+    <!-- TABLE -->
+
+    <div class="card">
+
+        <div class="controls">
+
+            <input
+                type="text"
+                id="search"
+                placeholder="🔎 Ism, familiya, lavozim yoki telefon..."
+                oninput="render()"
+            >
+
+            <select id="statusFilter" onchange="render()">
+
+                <option value="all">
+                    Barcha statuslar
+                </option>
+
+                <option value="active">
+                    Faol
+                </option>
+
+                <option value="vacation">
+                    Ta'tilda
+                </option>
+
+                <option value="fired">
+                    Ishdan ketgan
+                </option>
+
+            </select>
+
+            <button class="btn-gray" onclick="clearFilters()">
+                Tozalash
+            </button>
+
+        </div>
+
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>#</th>
+                        <th>F.I.Sh.</th>
+                        <th>Lavozimi</th>
+                        <th>Telefon</th>
+                        <th>Ish tajribasi</th>
+                        <th>Sana</th>
+                        <th>Status</th>
+                        <th>Amallar</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="employeeRows"></tbody>
+
+            </table>
+
+            <div class="empty" id="empty">
+                Hozircha xodimlar mavjud emas.
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ADD / EDIT MODAL -->
+
+<div class="modal" id="employeeModal">
+
+    <div class="modal-box">
+
+        <h2 id="modalTitle">
+            Yangi xodim
+        </h2>
+
+        <div class="form-grid">
+
+            <div class="form-group">
+
+                <label>F.I.Sh.</label>
+
+                <input
+                    id="name"
+                    type="text"
+                    placeholder="Masalan: Aliyev Aziz"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Lavozimi</label>
+
+                <input
+                    id="job"
+                    type="text"
+                    placeholder="Masalan: Muhandis"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Telefon</label>
+
+                <input
+                    id="phone"
+                    type="text"
+                    placeholder="+998 90 123 45 67"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Ish tajribasi</label>
+
+                <input
+                    id="experience"
+                    type="text"
+                    placeholder="3 yil"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Ishga kirgan sana</label>
+
+                <input
+                    id="date"
+                    type="date"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Status</label>
+
+                <select id="status">
+
+                    <option value="active">
+                        Faol
+                    </option>
+
+                    <option value="vacation">
+                        Ta'tilda
+                    </option>
+
+                    <option value="fired">
+                        Ishdan ketgan
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group full">
+
+                <label>Izoh</label>
+
+                <input
+                    id="note"
+                    type="text"
+                    placeholder="Qo‘shimcha ma'lumot"
+                >
+
+            </div>
+
+        </div>
+
+
+        <div class="modal-buttons">
+
+            <button class="btn-gray" onclick="closeModal()">
+                Bekor qilish
+            </button>
+
+            <button class="btn-blue" onclick="saveEmployee()">
+                Saqlash
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
 <script>
-let data=[];
-async function load(){const key=document.getElementById("key").value;if(!key)return;
-const r=await fetch("/api/applications",{headers:{"x-admin-key":key}});if(!r.ok){document.getElementById("empty").textContent="Admin kaliti noto‘g‘ri.";return}
-data=await r.json();render()}
-function render(){let q=document.getElementById("q").value.toLowerCase(),s=document.getElementById("status").value;
-let a=data.filter(x=>(!q||(x.name+" "+x.job+" "+x.phone).toLowerCase().includes(q))&&(!s||x.status===s));
-document.getElementById("empty").style.display=a.length?"none":"block";
-document.getElementById("rows").innerHTML=a.map(x=>`<tr><td>${x.id}</td><td><b>${esc(x.name)}</b><br><span class="sub">${esc(x.address||"")}</span></td><td>${esc(x.job)}</td><td>${esc(x.phone)}</td><td>${esc(x.experience||"-")}</td><td>${esc(x.created_at)}</td><td>${x.cv_filename?`<a class="cv" target="_blank" href="/api/cv/${encodeURIComponent(x.cv_filename)}?key=${encodeURIComponent(document.getElementById("key").value)}">Yuklab olish</a>`:"-"}</td><td><select onchange="changeStatus(${x.id},this.value)">${["Yangi","Ko‘rib chiqilmoqda","Suhbatga chaqirildi","Qabul qilindi","Rad etildi"].map(s=>`<option ${s===x.status?"selected":""}>${s}</option>`).join("")}</select></td></tr>`).join("")}
-async function changeStatus(id,status){await fetch("/api/applications/"+id,{method:"PATCH",headers:{"Content-Type":"application/json","x-admin-key":document.getElementById("key").value},body:JSON.stringify({status})});load()}
-function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
-document.getElementById("q").addEventListener("input",render);document.getElementById("status").addEventListener("change",render);
-</script></body></html>
+
+/* =========================
+   ADMIN
+========================= */
+
+/*
+   Xohlasangiz bu parolni o'zgartiring.
+   Hozirgi parol:
+   KTUNGSTEN2026
+*/
+
+const ADMIN_PASSWORD = "KTUNGSTEN2026";
+
+
+/* =========================
+   DATABASE
+========================= */
+
+let employees = JSON.parse(
+    localStorage.getItem("ktungsten_employees") || "[]"
+);
+
+let editingId = null;
+
+
+/* =========================
+   LOGIN
+========================= */
+
+function login() {
+
+    const password =
+        document.getElementById("adminPassword").value;
+
+    if (password === ADMIN_PASSWORD) {
+
+        localStorage.setItem(
+            "ktungsten_logged_in",
+            "true"
+        );
+
+        document.getElementById(
+            "loginScreen"
+        ).style.display = "none";
+
+        render();
+
+    } else {
+
+        document.getElementById(
+            "loginError"
+        ).style.display = "block";
+
+    }
+
+}
+
+
+function logout() {
+
+    localStorage.removeItem(
+        "ktungsten_logged_in"
+    );
+
+    location.reload();
+
+}
+
+
+/* =========================
+   SAVE DATABASE
+========================= */
+
+function saveDatabase() {
+
+    localStorage.setItem(
+        "ktungsten_employees",
+        JSON.stringify(employees)
+    );
+
+}
+
+
+/* =========================
+   MODAL
+========================= */
+
+function openAddModal() {
+
+    editingId = null;
+
+    document.getElementById(
+        "modalTitle"
+    ).textContent = "Yangi xodim";
+
+    document.getElementById("name").value = "";
+    document.getElementById("job").value = "";
+    document.getElementById("phone").value = "";
+    document.getElementById("experience").value = "";
+    document.getElementById("date").value = "";
+    document.getElementById("status").value = "active";
+    document.getElementById("note").value = "";
+
+    document.getElementById(
+        "employeeModal"
+    ).classList.add("active");
+
+}
+
+
+function closeModal() {
+
+    document.getElementById(
+        "employeeModal"
+    ).classList.remove("active");
+
+}
+
+
+/* =========================
+   SAVE EMPLOYEE
+========================= */
+
+function saveEmployee() {
+
+    const name =
+        document.getElementById("name").value.trim();
+
+    const job =
+        document.getElementById("job").value.trim();
+
+    const phone =
+        document.getElementById("phone").value.trim();
+
+    const experience =
+        document.getElementById("experience").value.trim();
+
+    const date =
+        document.getElementById("date").value;
+
+    const status =
+        document.getElementById("status").value;
+
+    const note =
+        document.getElementById("note").value.trim();
+
+
+    if (!name) {
+
+        alert("F.I.Sh. ni kiriting!");
+
+        return;
+
+    }
+
+
+    if (editingId) {
+
+        const employee =
+            employees.find(
+                x => x.id === editingId
+            );
+
+        if (employee) {
+
+            employee.name = name;
+            employee.job = job;
+            employee.phone = phone;
+            employee.experience = experience;
+            employee.date = date;
+            employee.status = status;
+            employee.note = note;
+
+        }
+
+    } else {
+
+        employees.push({
+
+            id: Date.now(),
+
+            name: name,
+
+            job: job,
+
+            phone: phone,
+
+            experience: experience,
+
+            date: date,
+
+            status: status,
+
+            note: note
+
+        });
+
+    }
+
+
+    saveDatabase();
+
+    closeModal();
+
+    render();
+
+}
+
+
+/* =========================
+   EDIT
+========================= */
+
+function editEmployee(id) {
+
+    const employee =
+        employees.find(
+            x => x.id === id
+        );
+
+    if (!employee) return;
+
+    editingId = id;
+
+    document.getElementById(
+        "modalTitle"
+    ).textContent = "Xodimni tahrirlash";
+
+    document.getElementById("name").value =
+        employee.name || "";
+
+    document.getElementById("job").value =
+        employee.job || "";
+
+    document.getElementById("phone").value =
+        employee.phone || "";
+
+    document.getElementById("experience").value =
+        employee.experience || "";
+
+    document.getElementById("date").value =
+        employee.date || "";
+
+    document.getElementById("status").value =
+        employee.status || "active";
+
+    document.getElementById("note").value =
+        employee.note || "";
+
+    document.getElementById(
+        "employeeModal"
+    ).classList.add("active");
+
+}
+
+
+/* =========================
+   DELETE
+========================= */
+
+function deleteEmployee(id) {
+
+    const employee =
+        employees.find(
+            x => x.id === id
+        );
+
+    if (!employee) return;
+
+
+    if (
+        confirm(
+            `"${employee.name}" xodimini o‘chirishni xohlaysizmi?`
+        )
+    ) {
+
+        employees =
+            employees.filter(
+                x => x.id !== id
+            );
+
+        saveDatabase();
+
+        render();
+
+    }
+
+}
+
+
+/* =========================
+   STATUS
+========================= */
+
+function statusText(status) {
+
+    if (status === "active")
+        return "Faol";
+
+    if (status === "vacation")
+        return "Ta'tilda";
+
+    if (status === "fired")
+        return "Ishdan ketgan";
+
+    return status;
+
+}
+
+
+function statusClass(status) {
+
+    if (status === "active")
+        return "status-active";
+
+    if (status === "vacation")
+        return "status-vacation";
+
+    if (status === "fired")
+        return "status-fired";
+
+    return "";
+
+}
+
+
+/* =========================
+   DATE
+========================= */
+
+function formatDate(date) {
+
+    if (!date)
+        return "—";
+
+    const parts =
+        date.split("-");
+
+    if (parts.length !== 3)
+        return date;
+
+    return `${parts[2]}.${parts[1]}.${parts[0]}`;
+
+}
+
+
+/* =========================
+   RENDER
+========================= */
+
+function render() {
+
+    const search =
+        document.getElementById(
+            "search"
+        ).value
+        .toLowerCase()
+        .trim();
+
+
+    const statusFilter =
+        document.getElementById(
+            "statusFilter"
+        ).value;
+
+
+    let filtered =
+        employees.filter(employee => {
+
+            const text = (
+
+                employee.name + " " +
+                employee.job + " " +
+                employee.phone + " " +
+                employee.experience
+
+            ).toLowerCase();
+
+
+            const searchMatch =
+                !search ||
+                text.includes(search);
+
+
+            const statusMatch =
+                statusFilter === "all" ||
+                employee.status === statusFilter;
+
+
+            return searchMatch &&
+                   statusMatch;
+
+        });
+
+
+    const tbody =
+        document.getElementById(
+            "employeeRows"
+        );
+
+
+    const empty =
+        document.getElementById(
+            "empty"
+        );
+
+
+    tbody.innerHTML = "";
+
+
+    if (filtered.length === 0) {
+
+        empty.style.display = "block";
+
+    } else {
+
+        empty.style.display = "none";
+
+
+        filtered.forEach(
+            (employee, index) => {
+
+                const row =
+                    document.createElement("tr");
+
+
+                row.innerHTML = `
+
+                    <td>${index + 1}</td>
+
+                    <td>
+                        <strong>
+                            ${escapeHtml(employee.name)}
+                        </strong>
+
+                        ${
+                            employee.note
+                            ? `<br>
+                               <small style="color:#8190a7">
+                               ${escapeHtml(employee.note)}
+                               </small>`
+                            : ""
+                        }
+                    </td>
+
+                    <td>
+                        ${escapeHtml(employee.job || "—")}
+                    </td>
+
+                    <td>
+                        ${escapeHtml(employee.phone || "—")}
+                    </td>
+
+                    <td>
+                        ${escapeHtml(employee.experience || "—")}
+                    </td>
+
+                    <td>
+                        ${formatDate(employee.date)}
+                    </td>
+
+                    <td>
+                        <span class="status ${statusClass(employee.status)}">
+                            ${statusText(employee.status)}
+                        </span>
+                    </td>
+
+                    <td>
+
+                        <div class="actions">
+
+                            <button
+                                class="btn-blue"
+                                onclick="editEmployee(${employee.id})"
+                            >
+                                ✏️
+                            </button>
+
+                            <button
+                                class="btn-red"
+                                onclick="deleteEmployee(${employee.id})"
+                            >
+                                🗑️
+                            </button>
+
+                        </div>
+
+                    </td>
+
+                `;
+
+
+                tbody.appendChild(row);
+
+            }
+        );
+
+    }
+
+
+    updateStats();
+
+}
+
+
+/* =========================
+   STATISTICS
+========================= */
+
+function updateStats() {
+
+    document.getElementById(
+        "totalCount"
+    ).textContent =
+        employees.length;
+
+
+    document.getElementById(
+        "activeCount"
+    ).textContent =
+        employees.filter(
+            x => x.status === "active"
+        ).length;
+
+
+    document.getElementById(
+        "vacationCount"
+    ).textContent =
+        employees.filter(
+            x => x.status === "vacation"
+        ).length;
+
+
+    document.getElementById(
+        "firedCount"
+    ).textContent =
+        employees.filter(
+            x => x.status === "fired"
+        ).length;
+
+}
+
+
+/* =========================
+   CLEAR FILTERS
+========================= */
+
+function clearFilters() {
+
+    document.getElementById(
+        "search"
+    ).value = "";
+
+    document.getElementById(
+        "statusFilter"
+    ).value = "all";
+
+    render();
+
+}
+
+
+/* =========================
+   SECURITY
+========================= */
+
+function escapeHtml(text) {
+
+    return String(text)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+
+/* =========================
+   START
+========================= */
+
+if (
+    localStorage.getItem(
+        "ktungsten_logged_in"
+    ) === "true"
+) {
+
+    document.getElementById(
+        "loginScreen"
+    ).style.display = "none";
+
+}
+
+
+render();
+
+
+/* MODAL OUTSIDE CLICK */
+
+document.getElementById(
+    "employeeModal"
+).addEventListener(
+    "click",
+    function(e) {
+
+        if (e.target === this) {
+            closeModal();
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
