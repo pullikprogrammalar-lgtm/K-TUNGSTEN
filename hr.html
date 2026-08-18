@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="uz"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>K-TUNGSTEN HR</title>
+<style>
+body{margin:0;background:#030d1d;color:#f5f8fc;font-family:Arial,sans-serif}.wrap{width:min(1200px,94%);margin:35px auto}.head{display:flex;justify-content:space-between;align-items:center;gap:15px}.head h1{margin:0}.sub{color:#8ea4bf;font-size:13px}.bar{margin:25px 0;padding:15px;background:#071a34;border:1px solid #173d67;border-radius:12px;display:flex;gap:10px;flex-wrap:wrap}input,select,button{background:#06172e;color:white;border:1px solid #21496f;border-radius:8px;padding:11px}button{cursor:pointer;background:#1265dc;border-color:#1265dc;font-weight:700}.table{overflow:auto;background:#06172e;border:1px solid #173d67;border-radius:12px}table{width:100%;border-collapse:collapse;min-width:900px}th,td{padding:13px;border-bottom:1px solid #16395f;text-align:left;font-size:12px}th{color:#5ca0ff}.pill{padding:5px 8px;border-radius:20px;background:#102e50}.empty{padding:30px;color:#8297b0}.cv{color:#4e9aff}
+</style></head><body><div class="wrap">
+<div class="head"><div><h1>K-TUNGSTEN HR</h1><div class="sub">Nomzodlar boshqaruv paneli</div></div><button onclick="load()">↻ Yangilash</button></div>
+<div class="bar"><input id="key" type="password" placeholder="Admin kaliti" style="min-width:260px"><input id="q" placeholder="Nomzod yoki vakansiya..." style="min-width:260px"><select id="status"><option value="">Barcha statuslar</option><option>Yangi</option><option>Ko‘rib chiqilmoqda</option><option>Suhbatga chaqirildi</option><option>Qabul qilindi</option><option>Rad etildi</option></select><button onclick="load()">Kirish</button></div>
+<div class="table"><table><thead><tr><th>#</th><th>Nomzod</th><th>Vakansiya</th><th>Telefon</th><th>Tajriba</th><th>Sana</th><th>CV</th><th>Status</th></tr></thead><tbody id="rows"></tbody></table><div id="empty" class="empty">Admin kalitini kiriting.</div></div>
+</div>
+<script>
+let data=[];
+async function load(){const key=document.getElementById("key").value;if(!key)return;
+const r=await fetch("/api/applications",{headers:{"x-admin-key":key}});if(!r.ok){document.getElementById("empty").textContent="Admin kaliti noto‘g‘ri.";return}
+data=await r.json();render()}
+function render(){let q=document.getElementById("q").value.toLowerCase(),s=document.getElementById("status").value;
+let a=data.filter(x=>(!q||(x.name+" "+x.job+" "+x.phone).toLowerCase().includes(q))&&(!s||x.status===s));
+document.getElementById("empty").style.display=a.length?"none":"block";
+document.getElementById("rows").innerHTML=a.map(x=>`<tr><td>${x.id}</td><td><b>${esc(x.name)}</b><br><span class="sub">${esc(x.address||"")}</span></td><td>${esc(x.job)}</td><td>${esc(x.phone)}</td><td>${esc(x.experience||"-")}</td><td>${esc(x.created_at)}</td><td>${x.cv_filename?`<a class="cv" target="_blank" href="/api/cv/${encodeURIComponent(x.cv_filename)}?key=${encodeURIComponent(document.getElementById("key").value)}">Yuklab olish</a>`:"-"}</td><td><select onchange="changeStatus(${x.id},this.value)">${["Yangi","Ko‘rib chiqilmoqda","Suhbatga chaqirildi","Qabul qilindi","Rad etildi"].map(s=>`<option ${s===x.status?"selected":""}>${s}</option>`).join("")}</select></td></tr>`).join("")}
+async function changeStatus(id,status){await fetch("/api/applications/"+id,{method:"PATCH",headers:{"Content-Type":"application/json","x-admin-key":document.getElementById("key").value},body:JSON.stringify({status})});load()}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
+document.getElementById("q").addEventListener("input",render);document.getElementById("status").addEventListener("change",render);
+</script></body></html>
