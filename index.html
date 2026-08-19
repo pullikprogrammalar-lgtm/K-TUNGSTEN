@@ -347,15 +347,58 @@ function closeModal() {
   }
 }
 
-/* Arizani localStoragega saqlash.
-   GitHub Pages server-side /api ishlatmagani uchun shu usul ishlatilmoqda. */
-document.getElementById("form").addEventListener("submit", function(e) {
+/* =========================================================
+   ARIZANI GOOGLE APPS SCRIPT -> GOOGLE SHEETS -> TELEGRAMGA YUBORISH
+   ========================================================= */
+
+const HR_API_URL = "https://script.google.com/macros/s/AKfycbxOH_jZNzmP60aidplfRsSjBeyAq0FDwxuGS1QrGMRh3_Ppwb2TmiaZJO1BPpOlZYqf/exec";
+
+function fileToBase64(file) {
+  return new Promise((resolve, reject) => {
+    if (!file) {
+      resolve(null);
+      return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      try {
+        const result = String(reader.result || "");
+        const commaIndex = result.indexOf(",");
+
+        if (commaIndex === -1) {
+          reject(new Error("CV fayli o‘qilmadi."));
+          return;
+        }
+
+        resolve({
+          name: file.name,
+          type: file.type || "application/octet-stream",
+          data: result.substring(commaIndex + 1)
+        });
+      } catch (error) {
+        reject(error);
+      }
+    };
+
+    reader.onerror = () => reject(new Error("CV faylini o‘qishda xatolik."));
+    reader.readAsDataURL(file);
+  });
+}
+
+document.getElementById("form").addEventListener("submit", async function(e) {
   e.preventDefault();
 
+  const form = this;
+  const submitButton = form.querySelector(".submit");
   const fileInput = document.querySelector('#form input[type="file"]');
+  const file = fileInput && fileInput.files.length
+    ? fileInput.files[0]
+    : null;
 
+  /* Apps Script-ga yuborilayotgan ma’lumot */
   const application = {
-    id: "app-" + Date.now(),
     name: document.getElementById("name").value.trim(),
     phone: document.getElementById("phone").value.trim(),
     birth: document.getElementById("birth").value,
@@ -364,17 +407,65 @@ document.getElementById("form").addEventListener("submit", function(e) {
     experience: document.getElementById("experience").value.trim(),
     about: document.getElementById("aboutme").value.trim(),
     job: document.getElementById("job").value,
-    cvName: fileInput.files[0] ? fileInput.files[0].name : "",
-    date: new Date().toLocaleString("uz-UZ")
+    source: "K-TUNGSTEN rasmiy sayti",
+    cv: null
   };
 
-  const apps = JSON.parse(localStorage.getItem("kt_apps") || "[]");
-  apps.push(application);
-  localStorage.setItem("kt_apps", JSON.stringify(apps));
+  try {
+    /* Yuklangan CV bo‘lsa, Base64 ko‘rinishida yuboramiz */
+    if (file) {
+      const maxSize = 7 * 1024 * 1024;
 
-  alert("Arizangiz muvaffaqiyatli qabul qilindi!");
-  this.reset();
-  closeModal();
+      if (file.size > maxSize) {
+        throw new Error("CV fayli 7 MB dan katta bo‘lmasligi kerak.");
+      }
+
+      application.cv = await fileToBase64(file);
+    }
+
+    submitButton.disabled = true;
+    submitButton.textContent = "YUBORILMOQDA...";
+
+    const response = await fetch(HR_API_URL, {
+      method: "POST",
+      body: JSON.stringify(application),
+      redirect: "follow"
+    });
+
+    const raw = await response.text();
+
+    let result;
+
+    try {
+      result = JSON.parse(raw);
+    } catch (_) {
+      throw new Error("Serverdan noto‘g‘ri javob qaytdi.");
+    }
+
+    if (!result.success) {
+      throw new Error(result.error || "Ariza yuborilmadi.");
+    }
+
+    alert(
+      "✅ Arizangiz muvaffaqiyatli yuborildi!\n\n" +
+      "Ariza ID: " + (result.id || "—")
+    );
+
+    form.reset();
+    closeModal();
+
+  } catch (error) {
+    console.error("Ariza yuborishda xatolik:", error);
+
+    alert(
+      "❌ Arizani yuborishda xatolik yuz berdi.\n\n" +
+      (error && error.message ? error.message : "Noma’lum xatolik")
+    );
+
+  } finally {
+    submitButton.disabled = false;
+    submitButton.textContent = "ARIZANI YUBORISH →";
+  }
 });
 
 /* Qidiruv */
