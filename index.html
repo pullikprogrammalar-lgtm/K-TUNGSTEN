@@ -100,130 +100,322 @@ footer{padding:45px 0 25px;border-top:1px solid #123154;background:#020a16}.foot
 <div class="field full"><label>O‘zingiz haqingizda</label><textarea id="aboutme"></textarea></div><div class="field full"><label>CV</label><input type="file" accept=".pdf,.doc,.docx"></div>
 <button class="btn blue submit">ARIZANI YUBORISH →</button></form></div></div>
 <script>
-const vacancies=[
-{id:1,title:"Shina montaj qiluvchi-vulkanlashtiruvchi",location:"Uchquduq",exp:"1–3 yil",type:"To‘liq stavka",desc:"K-TUNGSTEN jamoasiga shina montaj qiluvchi-vulkanlashtiruvchi lavozimiga tajribali mutaxassis qabul qilinadi.",tasks:["G‘ildiraklarni mashinadan olib tashlash va o‘rnatish","Shinalarni disklardan ajratish va yig‘ish","Teshik va kesishlarni aniqlash","G‘ildiraklarni muvozanatlash","Vulkanizator yordamida shinalarni ta’mirlash","Texnika xavfsizligi qoidalariga qat’iy rioya qilish"],req:["Shina montaj/vulkanizatsiya bo‘yicha 1–3 yillik tajriba","Vulkanizator-shina montaj qiluvchi kasbi bo‘yicha diplom yoki sertifikat","Mas’uliyatlilik va xavfsizlik qoidalariga rioya qilish"],new:true},
-{id:2,title:"Kon uskunalarini ta’mirlash ustasi",location:"Uchquduq",exp:"3+ yil",type:"To‘liq stavka",desc:"Kon uskunalarini texnik ko‘rikdan o‘tkazish, ta’mirlash va uzluksiz ishlashini ta’minlash.",tasks:["Uskunalarni diagnostika qilish","Rejali ta’mirlash ishlarini bajarish","Nosoz qismlarni almashtirish","Texnik hujjatlarni yuritish"],req:["Kamida 3 yil tegishli tajriba","Texnik yo‘nalishdagi ma’lumot","Mehnat xavfsizligi talablarini bilish"]},
-{id:3,title:"Elektrik",location:"Uchquduq",exp:"2+ yil",type:"To‘liq stavka",desc:"Ishlab chiqarish va ma’muriy obyektlardagi elektr tarmoqlari hamda jihozlariga xizmat ko‘rsatish.",tasks:["Elektr tarmoqlarini nazorat qilish","Profilaktik va ta’mirlash ishlarini bajarish","Elektr jihozlarini ulash va sinash","Xavfsizlik talablariga rioya qilish"],req:["2 yildan ortiq tajriba","Elektrik bo‘yicha malaka hujjati","Elektr xavfsizligi qoidalarini bilish"]},
-{id:4,title:"Buxgalter",location:"Navoiy",exp:"2+ yil",type:"To‘liq stavka",desc:"Korxonaning kundalik buxgalteriya hisobini yuritish va moliyaviy hujjatlarni nazorat qilish.",tasks:["Birlamchi hujjatlarni rasmiylashtirish","Hisobotlarni tayyorlash","Hisob-kitoblarni nazorat qilish","Elektron tizimlarda ishlash"],req:["2+ yil tajriba","Buxgalteriya yoki moliya yo‘nalishidagi ma’lumot","Mas’uliyat va aniqlik"]}];
+/* =========================================================
+   K-TUNGSTEN — YAGONA VAKANSIYA TIZIMI
+   HR PANEL -> localStorage -> Asosiy sayt
+   ========================================================= */
 
-function render(){
- const q=document.getElementById("q").value.toLowerCase(),l=document.getElementById("loc").value,e=document.getElementById("exp").value;
- const a=vacancies.filter(v=>(!q||v.title.toLowerCase().includes(q))&&(!l||v.location===l)&&(!e||v.exp===e));
- document.getElementById("resultCount").textContent=a.length+" ta vakansiya";
- document.getElementById("jobsList").style.opacity="1";document.getElementById("jobsList").style.transform="none";document.getElementById("jobsList").innerHTML=a.map(v=>`
- <article class="job">
- ${v.new?'<span class="new">YANGI</span>':''}
- <h3>${v.title}</h3><div class="meta">⌖ ${v.location}, Navoiy viloyati<br>◷ ${v.exp} tajriba<br>▣ ${v.type}</div>
- <p>${v.desc}</p><div class="bottom"><a href="#" onclick="openDetail(${v.id});return false">BATAFSIL →</a><a class="arrow" href="#" onclick="openDetail(${v.id});return false">→</a></div>
- </article>`).join("") || "<p style='color:#8da0b7'>Mos vakansiya topilmadi.</p>";
+const staticVacancies = [
+  {
+    id: "static-1",
+    title: "Shina montaj qiluvchi-vulkanlashtiruvchi",
+    location: "Uchquduq",
+    exp: "1–3 yil",
+    type: "To‘liq stavka",
+    salary: "Suhbat asosida",
+    desc: "K-TUNGSTEN jamoasiga shina montaj qiluvchi-vulkanlashtiruvchi lavozimiga tajribali mutaxassis qabul qilinadi.",
+    tasks: [
+      "G‘ildiraklarni mashinadan olib tashlash va o‘rnatish",
+      "Shinalarni disklardan ajratish va yig‘ish",
+      "Teshik va kesishlarni aniqlash",
+      "G‘ildiraklarni muvozanatlash",
+      "Vulkanizator yordamida shinalarni ta’mirlash",
+      "Texnika xavfsizligi qoidalariga qat’iy rioya qilish"
+    ],
+    req: [
+      "Shina montaj/vulkanizatsiya bo‘yicha 1–3 yillik tajriba",
+      "Vulkanizator-shina montaj qiluvchi kasbi bo‘yicha diplom yoki sertifikat",
+      "Mas’uliyatlilik va xavfsizlik qoidalariga rioya qilish"
+    ],
+    new: true
+  },
+  {
+    id: "static-2",
+    title: "Kon uskunalarini ta’mirlash ustasi",
+    location: "Uchquduq",
+    exp: "3+ yil",
+    type: "To‘liq stavka",
+    salary: "Suhbat asosida",
+    desc: "Kon uskunalarini texnik ko‘rikdan o‘tkazish, ta’mirlash va uzluksiz ishlashini ta’minlash.",
+    tasks: [
+      "Uskunalarni diagnostika qilish",
+      "Rejali ta’mirlash ishlarini bajarish",
+      "Nosoz qismlarni almashtirish",
+      "Texnik hujjatlarni yuritish"
+    ],
+    req: [
+      "Kamida 3 yil tegishli tajriba",
+      "Texnik yo‘nalishdagi ma’lumot",
+      "Mehnat xavfsizligi talablarini bilish"
+    ]
+  },
+  {
+    id: "static-3",
+    title: "Elektrik",
+    location: "Uchquduq",
+    exp: "2+ yil",
+    type: "To‘liq stavka",
+    salary: "Suhbat asosida",
+    desc: "Ishlab chiqarish va ma’muriy obyektlardagi elektr tarmoqlari hamda jihozlariga xizmat ko‘rsatish.",
+    tasks: [
+      "Elektr tarmoqlarini nazorat qilish",
+      "Profilaktik va ta’mirlash ishlarini bajarish",
+      "Elektr jihozlarini ulash va sinash",
+      "Xavfsizlik talablariga rioya qilish"
+    ],
+    req: [
+      "2 yildan ortiq tajriba",
+      "Elektrik bo‘yicha malaka hujjati",
+      "Elektr xavfsizligi qoidalarini bilish"
+    ]
+  },
+  {
+    id: "static-4",
+    title: "Buxgalter",
+    location: "Navoiy",
+    exp: "2+ yil",
+    type: "To‘liq stavka",
+    salary: "Suhbat asosida",
+    desc: "Korxonaning kundalik buxgalteriya hisobini yuritish va moliyaviy hujjatlarni nazorat qilish.",
+    tasks: [
+      "Birlamchi hujjatlarni rasmiylashtirish",
+      "Hisobotlarni tayyorlash",
+      "Hisob-kitoblarni nazorat qilish",
+      "Elektron tizimlarda ishlash"
+    ],
+    req: [
+      "2+ yil tajriba",
+      "Buxgalteriya yoki moliya yo‘nalishidagi ma’lumot",
+      "Mas’uliyat va aniqlik"
+    ]
+  }
+];
+
+/* HR PANELdan keladigan vakansiyalar */
+function getHRVacancies() {
+  try {
+    const raw = JSON.parse(localStorage.getItem("ktungsten_vacancies") || "[]");
+    if (!Array.isArray(raw)) return [];
+
+    return raw
+      .filter(v => v && (v.status === "active" || !v.status))
+      .map((v, index) => ({
+        id: v.id || ("hr-" + index + "-" + Date.now()),
+        title: v.title || "Nomsiz vakansiya",
+        location: v.location || "Uchquduq",
+        exp: v.experience || v.exp || "Talab qilinmaydi",
+        type: v.type || "To‘liq stavka",
+        salary: v.salary || "Suhbat asosida",
+        desc: v.description || v.desc || "Vakansiya haqida ma’lumot HR bo‘limi tomonidan kiritiladi.",
+        tasks: Array.isArray(v.tasks) ? v.tasks : [],
+        req: Array.isArray(v.requirements) ? v.requirements : (Array.isArray(v.req) ? v.req : []),
+        new: !!v.new,
+        fromHR: true
+      }));
+  } catch (error) {
+    console.error("HR vakansiyalarini o‘qishda xatolik:", error);
+    return [];
+  }
 }
 
-function openDetail(id){
- const v=vacancies.find(x=>x.id===id); if(!v)return;
- document.getElementById("detailTitle").textContent=v.title;
- document.getElementById("detailDesc").textContent=v.desc;
- document.getElementById("detailMeta").innerHTML=`<span class="meta-pill">⌖ ${v.location}</span><span class="meta-pill">◷ ${v.exp}</span><span class="meta-pill">▣ ${v.type}</span>`;
-document.getElementById("form").addEventListener("submit",async e=>{
+/* HR vakansiyalarini birinchi o‘ringa qo‘yib, eski static vakansiyalarni ham saqlaymiz.
+   Bir xil title bo‘lsa, HRdagi versiya ustun bo‘ladi. */
+function getAllVacancies() {
+  const hr = getHRVacancies();
+  const titles = new Set(hr.map(v => v.title.trim().toLowerCase()));
+  const staticList = staticVacancies.filter(
+    v => !titles.has(v.title.trim().toLowerCase())
+  );
+  return [...hr, ...staticList];
+}
+
+let vacancies = [];
+
+/* HTMLga xavfsiz chiqarish */
+function esc(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+/* Vakansiyalarni chiqarish */
+function render() {
+  vacancies = getAllVacancies();
+
+  const q = document.getElementById("q").value.trim().toLowerCase();
+  const l = document.getElementById("loc").value;
+  const e = document.getElementById("exp").value;
+
+  const filtered = vacancies.filter(v =>
+    (!q || v.title.toLowerCase().includes(q)) &&
+    (!l || v.location === l) &&
+    (!e || v.exp === e)
+  );
+
+  document.getElementById("resultCount").textContent =
+    filtered.length + " ta vakansiya";
+
+  const container = document.getElementById("jobsList");
+
+  if (!filtered.length) {
+    container.innerHTML =
+      "<p style='color:#8da0b7'>Mos vakansiya topilmadi.</p>";
+    return;
+  }
+
+  container.innerHTML = filtered.map(v => `
+    <article class="job">
+      ${v.new ? '<span class="new">YANGI</span>' : ''}
+      <h3>${esc(v.title)}</h3>
+      <div class="meta">
+        ⌖ ${esc(v.location)}, Navoiy viloyati<br>
+        ◷ ${esc(v.exp)} tajriba<br>
+        ▣ ${esc(v.type)}
+      </div>
+      <p>${esc(v.desc)}</p>
+      <div class="bottom">
+        <a href="#" onclick="openDetail('${esc(v.id)}');return false">BATAFSIL →</a>
+        <a class="arrow" href="#" onclick="openDetail('${esc(v.id)}');return false">→</a>
+      </div>
+    </article>
+  `).join("");
+}
+
+/* Batafsil oynasini ochish */
+function openDetail(id) {
+  vacancies = getAllVacancies();
+
+  const v = vacancies.find(x => String(x.id) === String(id));
+  if (!v) return;
+
+  document.getElementById("detailTitle").textContent = v.title;
+  document.getElementById("detailDesc").textContent = v.desc;
+
+  document.getElementById("detailMeta").innerHTML = `
+    <span class="meta-pill">⌖ ${esc(v.location)}</span>
+    <span class="meta-pill">◷ ${esc(v.exp)}</span>
+    <span class="meta-pill">▣ ${esc(v.type)}</span>
+    <span class="meta-pill">💰 ${esc(v.salary)}</span>
+  `;
+
+  const tasks = document.getElementById("detailTasks");
+  tasks.innerHTML = (v.tasks && v.tasks.length)
+    ? v.tasks.map(x => `<li>${esc(x)}</li>`).join("")
+    : "<li>Vazifalar ma’lumoti HR bo‘limi tomonidan beriladi.</li>";
+
+  const req = document.getElementById("detailRequirements");
+  req.innerHTML = (v.req && v.req.length)
+    ? v.req.map(x => `<li>${esc(x)}</li>`).join("")
+    : "<li>Talablar vakansiya bo‘yicha belgilanadi.</li>";
+
+  document.getElementById("detailApply").onclick = () => {
+    closeDetail();
+    openModal(v.id);
+  };
+
+  document.getElementById("vacancyModal").classList.add("show");
+  document.body.style.overflow = "hidden";
+}
+
+function closeDetail() {
+  document.getElementById("vacancyModal").classList.remove("show");
+  if (!document.getElementById("modal").classList.contains("show")) {
+    document.body.style.overflow = "";
+  }
+}
+
+/* Ariza oynasini ochish */
+function openModal(id) {
+  vacancies = getAllVacancies();
+
+  const v = vacancies.find(x => String(x.id) === String(id));
+  if (!v) return;
+
+  document.getElementById("modalTitle").textContent = v.title;
+  document.getElementById("job").value = v.title;
+  document.getElementById("modal").classList.add("show");
+  document.body.style.overflow = "hidden";
+}
+
+function closeModal() {
+  document.getElementById("modal").classList.remove("show");
+  if (!document.getElementById("vacancyModal").classList.contains("show")) {
+    document.body.style.overflow = "";
+  }
+}
+
+/* Arizani localStoragega saqlash.
+   GitHub Pages server-side /api ishlatmagani uchun shu usul ishlatilmoqda. */
+document.getElementById("form").addEventListener("submit", function(e) {
   e.preventDefault();
 
-  const fd=new FormData();
+  const fileInput = document.querySelector('#form input[type="file"]');
 
-  [["name","name"],
-   ["phone","phone"],
-   ["birth","birth"],
-   ["address","address"],
-   ["education","edu"],
-   ["experience","experience"],
-   ["about","aboutme"],
-   ["job","job"]
-  ].forEach(([k,id])=>{
-    fd.append(k,document.getElementById(id).value);
-  });
+  const application = {
+    id: "app-" + Date.now(),
+    name: document.getElementById("name").value.trim(),
+    phone: document.getElementById("phone").value.trim(),
+    birth: document.getElementById("birth").value,
+    address: document.getElementById("address").value.trim(),
+    education: document.getElementById("edu").value.trim(),
+    experience: document.getElementById("experience").value.trim(),
+    about: document.getElementById("aboutme").value.trim(),
+    job: document.getElementById("job").value,
+    cvName: fileInput.files[0] ? fileInput.files[0].name : "",
+    date: new Date().toLocaleString("uz-UZ")
+  };
 
-  const file=document.querySelector('#form input[type="file"]');
+  const apps = JSON.parse(localStorage.getItem("kt_apps") || "[]");
+  apps.push(application);
+  localStorage.setItem("kt_apps", JSON.stringify(apps));
 
-  if(file.files[0]){
-    fd.append("cv",file.files[0]);
-  }
+  alert("Arizangiz muvaffaqiyatli qabul qilindi!");
+  this.reset();
+  closeModal();
+});
 
-  try{
-    const r=await fetch("/api/applications",{
-      method:"POST",
-      body:fd
-    });
+/* Qidiruv */
+document.getElementById("q").addEventListener("input", render);
+document.getElementById("loc").addEventListener("change", render);
+document.getElementById("exp").addEventListener("change", render);
 
-    const d=await r.json();
+/* Tashqarisini bosganda modalni yopish */
+window.addEventListener("click", function(e) {
+  if (e.target.id === "modal") closeModal();
+  if (e.target.id === "vacancyModal") closeDetail();
+});
 
-    if(!r.ok){
-      alert(d.error||"Arizani yuborishda xatolik.");
-      return;
-    }
-
-    alert("Arizangiz qabul qilindi!");
-    closeModal();
-    e.target.reset();
-
-  }catch(error){
-    console.error(error);
-    alert("Server bilan bog‘lanishda xatolik.");
+/* HR Panel boshqa oynada o‘zgartirilsa, saytni yangilash */
+window.addEventListener("storage", function(e) {
+  if (e.key === "ktungsten_vacancies") {
+    render();
   }
 });
- e.preventDefault();
- const fd=new FormData();
- [["name","name"],["phone","phone"],["birth","birth"],["address","address"],["education","edu"],["experience","experience"],["about","aboutme"],["job","job"]].forEach(([k,id])=>fd.append(k,document.getElementById(id).value));
- const file=document.querySelector('#form input[type="file"]'); if(file.files[0]) fd.append("cv",file.files[0]);
- const r=await fetch("/api/applications",{method:"POST",body:fd}); const d=await r.json();
- if(!r.ok){alert(d.error||"Arizani yuborishda xatolik.");return}
- alert("Arizangiz qabul qilindi!");closeModal();e.target.reset();
-});localStorage.setItem("kt_apps",JSON.stringify(a));alert("Arizangiz qabul qilindi!");closeModal();e.target.reset()});
-window.onclick=e=>{if(e.target.id==="modal")closeModal();if(e.target.id==="vacancyModal")closeDetail()};
-document.getElementById("q").addEventListener("input",render);document.getElementById("loc").addEventListener("change",render);document.getElementById("exp").addEventListener("change",render);
-render();
-const revealObserver=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.style.opacity="1";e.target.style.transform="translateY(0)";revealObserver.unobserve(e.target)}})},{threshold:.08});
-document.querySelectorAll("section .section-head,.benefit,.career>div,.cta").forEach(el=>{el.style.opacity="0";el.style.transform="translateY(18px)";el.style.transition="opacity .65s ease,transform .65s ease";revealObserver.observe(el)});
-</script>
- <script>
-function loadVacancies() {
-    const vacancies = JSON.parse(
-        localStorage.getItem("ktungsten_vacancies") || "[]"
-    );
 
-    const container = document.getElementById("jobsList");
+/* Birinchi yuklanish */
+document.addEventListener("DOMContentLoaded", render);
 
-    if (!container) return;
-
-    if (vacancies.length === 0) {
-        container.innerHTML = `
-            <div style="padding:40px;text-align:center;color:#8fa3bd;">
-                Hozircha ochiq vakansiyalar mavjud emas.
-            </div>
-        `;
-        return;
+/* Scroll animatsiyasi */
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.style.opacity = "1";
+      e.target.style.transform = "translateY(0)";
+      revealObserver.unobserve(e.target);
     }
+  });
+}, {threshold:.08});
 
-    container.innerHTML = vacancies
-        .filter(v => v.status === "active")
-        .map(v => `
-            <div class="vacancy-card">
-                <div>
-                    <h3>${v.title}</h3>
-                    <p>📍 ${v.location}</p>
-                    <p>💼 ${v.type}</p>
-                    <p>📊 Tajriba: ${v.experience || "Talab qilinmaydi"}</p>
-                    <p>💰 Maosh: ${v.salary || "Suhbat asosida"}</p>
-                </div>
-
-                <div>
-                    <p>${v.description || ""}</p>
-                    <button onclick="alert('Vakansiyaga murojaat qilish uchun Aloqa bo‘limiga o‘ting.')">
-                        Batafsil
-                    </button>
-                </div>
-            </div>
-        `)
-        .join("");
-}
-
-document.addEventListener("DOMContentLoaded", loadVacancies);
+document.querySelectorAll("section .section-head,.benefit,.career>div,.cta")
+  .forEach(el => {
+    el.style.opacity = "0";
+    el.style.transform = "translateY(18px)";
+    el.style.transition = "opacity .65s ease,transform .65s ease";
+    revealObserver.observe(el);
+  });
 </script>
-</body></html>
+</body>
+</html>
