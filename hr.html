@@ -2,1604 +2,177 @@
 <html lang="uz">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>K-TUNGSTEN — HR Panel</title>
-
 <style>
-* {
-    box-sizing: border-box;
-}
-
-body {
-    margin: 0;
-    background: #080d18;
-    color: #f5f7fb;
-    font-family: Arial, sans-serif;
-}
-
-.container {
-    width: min(1250px, 94%);
-    margin: 30px auto;
-}
-
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-    margin-bottom: 25px;
-    flex-wrap: wrap;
-}
-
-.logo h1 {
-    margin: 0;
-    font-size: 28px;
-}
-
-.logo p {
-    margin: 6px 0 0;
-    color: #9aa8bd;
-}
-
-button {
-    border: 0;
-    border-radius: 8px;
-    padding: 11px 17px;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-.btn-blue {
-    background: #1672ff;
-    color: white;
-}
-
-.btn-green {
-    background: #19a974;
-    color: white;
-}
-
-.btn-red {
-    background: #d93636;
-    color: white;
-}
-
-.btn-gray {
-    background: #273247;
-    color: white;
-}
-
-.card {
-    background: #101827;
-    border: 1px solid #26344a;
-    border-radius: 14px;
-    padding: 20px;
-    margin-bottom: 20px;
-}
-
-.stats {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 15px;
-    margin-bottom: 20px;
-}
-
-.stat {
-    background: #111c2d;
-    border: 1px solid #26344a;
-    border-radius: 12px;
-    padding: 20px;
-}
-
-.stat-title {
-    color: #9aa8bd;
-    font-size: 14px;
-}
-
-.stat-number {
-    font-size: 30px;
-    font-weight: bold;
-    margin-top: 8px;
-}
-
-.controls {
-    display: grid;
-    grid-template-columns: 1fr 220px auto;
-    gap: 12px;
-    margin-bottom: 18px;
-}
-
-input,
-select {
-    width: 100%;
-    padding: 13px;
-    border-radius: 8px;
-    border: 1px solid #34445d;
-    background: #0b1321;
-    color: white;
-    outline: none;
-}
-
-input:focus,
-select:focus {
-    border-color: #1672ff;
-}
-
-.table-wrapper {
-    overflow-x: auto;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    min-width: 900px;
-}
-
-th {
-    text-align: left;
-    color: #9aa8bd;
-    font-size: 13px;
-    padding: 14px;
-    border-bottom: 1px solid #29374d;
-}
-
-td {
-    padding: 14px;
-    border-bottom: 1px solid #1e2a3c;
-}
-
-tr:hover {
-    background: #121f33;
-}
-
-.status {
-    display: inline-block;
-    padding: 6px 10px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: bold;
-}
-
-.status-active {
-    background: #123c2d;
-    color: #4ce0a4;
-}
-
-.status-vacation {
-    background: #3d3211;
-    color: #ffd45a;
-}
-
-.status-fired {
-    background: #3b171b;
-    color: #ff7777;
-}
-
-.actions {
-    display: flex;
-    gap: 7px;
-}
-
-.actions button {
-    padding: 7px 10px;
-    font-size: 12px;
-}
-
-.empty {
-    text-align: center;
-    padding: 50px;
-    color: #9aa8bd;
-}
-
-.modal {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,.75);
-    z-index: 1000;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-}
-
-.modal.active {
-    display: flex;
-}
-
-.modal-box {
-    width: min(600px, 100%);
-    max-height: 90vh;
-    overflow-y: auto;
-    background: #101827;
-    border: 1px solid #30405a;
-    border-radius: 15px;
-    padding: 25px;
-}
-
-.modal-box h2 {
-    margin-top: 0;
-}
-
-.form-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-}
-
-.form-group {
-    margin-bottom: 15px;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 7px;
-    color: #aebbd0;
-    font-size: 13px;
-}
-
-.full {
-    grid-column: 1 / -1;
-}
-
-.modal-buttons {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    margin-top: 15px;
-}
-
-.login-screen {
-    position: fixed;
-    inset: 0;
-    background: #080d18;
-    z-index: 2000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-}
-
-.login-box {
-    width: min(420px, 100%);
-    background: #101827;
-    border: 1px solid #2b3b55;
-    border-radius: 16px;
-    padding: 30px;
-}
-
-.login-box h1 {
-    margin-top: 0;
-}
-
-.login-box p {
-    color: #9aa8bd;
-}
-
-.error {
-    color: #ff7777;
-    margin-top: 10px;
-    display: none;
-}
-
-@media (max-width: 800px) {
-    .stats {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .controls {
-        grid-template-columns: 1fr;
-    }
-
-    .form-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-@media (max-width: 500px) {
-    .stats {
-        grid-template-columns: 1fr;
-    }
-
-    .container {
-        width: 92%;
-    }
-}
+:root{--bg:#080d18;--panel:#101827;--panel2:#111c2d;--line:#26344a;--text:#f5f7fb;--muted:#9aa8bd;--blue:#1672ff;--green:#19a974;--red:#d93636;--yellow:#ffd45a}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#060b15,#080d18);color:var(--text);font-family:Arial,Helvetica,sans-serif}
+button,input,select,textarea{font:inherit}button{border:0;cursor:pointer}.hidden{display:none!important}
+.container{width:min(1250px,94%);margin:28px auto 50px}.topbar{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;margin-bottom:22px}
+.brand h1{margin:0;font-size:30px}.brand p{margin:7px 0 0;color:var(--muted)}.actions{display:flex;gap:10px;flex-wrap:wrap}
+.btn{color:#fff;padding:11px 16px;border-radius:9px;font-weight:700}.btn-blue{background:linear-gradient(135deg,#1d78ff,#0d51c9)}.btn-green{background:var(--green)}.btn-gray{background:#273247}.btn-red{background:var(--red)}.btn:disabled{opacity:.55;cursor:not-allowed}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}.stat{background:var(--panel2);border:1px solid var(--line);border-radius:13px;padding:20px}.stat-title{color:var(--muted);font-size:13px}.stat-number{font-size:31px;font-weight:800;margin-top:8px}
+.card{background:rgba(16,24,39,.96);border:1px solid var(--line);border-radius:14px;padding:20px;margin-bottom:20px;box-shadow:0 14px 35px rgba(0,0,0,.12)}
+.card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:15px;flex-wrap:wrap;margin-bottom:16px}.card-head h2{margin:0;font-size:20px}.card-head p{margin:6px 0 0;color:var(--muted);font-size:13px}
+.controls{display:grid;grid-template-columns:1fr 220px auto;gap:10px;margin-bottom:15px}
+input,select,textarea{width:100%;padding:12px 13px;border-radius:9px;border:1px solid #34445d;background:#0b1321;color:#fff;outline:none}input:focus,select:focus,textarea:focus{border-color:var(--blue)}textarea{min-height:110px;resize:vertical}
+.table-wrap{overflow-x:auto}table{width:100%;border-collapse:collapse;min-width:900px}th{text-align:left;color:var(--muted);font-size:12px;padding:12px;border-bottom:1px solid #29374d}td{padding:13px 12px;border-bottom:1px solid #1e2a3c;vertical-align:top;font-size:13px}tr:hover{background:#121f33}
+.empty{padding:35px;text-align:center;color:var(--muted)}.small{font-size:12px;color:#8190a7}.status{display:inline-block;padding:6px 9px;border-radius:18px;font-size:11px;font-weight:700}.status-active{background:#123c2d;color:#4ce0a4}.status-vacation{background:#3d3211;color:var(--yellow)}.status-fired{background:#3b171b;color:#ff7777}.row-actions{display:flex;gap:6px;flex-wrap:wrap}.row-actions button{padding:7px 9px;border-radius:7px;color:#fff}
+.login{position:fixed;inset:0;background:#080d18;display:flex;align-items:center;justify-content:center;padding:20px;z-index:2000}.login-box{width:min(430px,100%);background:var(--panel);border:1px solid #2b3b55;border-radius:16px;padding:30px}.login-box h1{margin:0 0 8px}.login-box p{color:var(--muted);margin:0 0 18px}.login-error{display:none;color:#ff7777;margin-top:10px;font-size:13px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;padding:20px;z-index:1500}.modal.show{display:flex}.modal-box{width:min(680px,100%);max-height:90vh;overflow:auto;background:var(--panel);border:1px solid #30405a;border-radius:15px;padding:24px}.modal-box h2{margin:0 0 18px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}.form-group{display:flex;flex-direction:column;gap:7px}.form-group.full{grid-column:1/-1}.form-group label{font-size:12px;color:#aebbd0}.modal-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:16px;flex-wrap:wrap}
+.application-details{margin-top:6px;padding:10px;border:1px solid #22334a;border-radius:9px;background:#0b1321;line-height:1.6}.application-details summary{cursor:pointer;color:#58a0ff}
+.notice{margin:0 0 12px;padding:11px 13px;border-radius:9px;font-size:12px;background:#0b1321;border:1px solid #23344c;color:#aebbd0}.notice.error{color:#ff8d8d;border-color:#57252b}.notice.ok{color:#7be3b7;border-color:#1e4a3c}.cv-link{color:#58a0ff;text-decoration:none;font-weight:700}
+@media(max-width:900px){.stats{grid-template-columns:repeat(2,1fr)}.controls{grid-template-columns:1fr}}@media(max-width:600px){.stats{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.container{width:92%}}
 </style>
 </head>
-
 <body>
 
-<!-- LOGIN -->
-<div class="login-screen" id="loginScreen">
-
-    <div class="login-box">
-
-        <h1>🔐 K-TUNGSTEN</h1>
-
-        <p>HR paneliga kirish</p>
-
-        <input
-            type="password"
-            id="adminPassword"
-            placeholder="Admin kaliti"
-            onkeydown="if(event.key==='Enter') login()"
-        >
-
-        <br><br>
-
-        <button class="btn-blue" onclick="login()" style="width:100%;">
-            Kirish
-        </button>
-
-        <div class="error" id="loginError">
-            Admin kaliti noto‘g‘ri!
-        </div>
-
-    </div>
-
+<div class="login" id="loginScreen">
+  <div class="login-box">
+    <h1>🔐 K-TUNGSTEN</h1>
+    <p>HR paneliga kirish</p>
+    <input id="adminPassword" type="password" placeholder="Admin kaliti">
+    <button class="btn btn-blue" id="loginBtn" style="width:100%;margin-top:12px">Kirish</button>
+    <div class="login-error" id="loginError">Admin kaliti noto‘g‘ri!</div>
+  </div>
 </div>
 
-
-<!-- MAIN -->
-
-<div class="container">
-
-    <div class="header">
-
-        <div class="logo">
-
-            <h1>K-TUNGSTEN</h1>
-
-            <p>HR — xodimlar boshqaruv paneli</p>
-
-        </div>
-
-        <div>
-
-          <button class="btn-green" onclick="openAddModal()">
-    + Xodim qo‘shish
-</button>
-
-<button class="btn-blue" onclick="document.getElementById('vacancyModal').style.display='flex'">
-    + Vakansiya qo‘shish
-</button>
-
-<button class="btn-gray" onclick="logout()">
-    Chiqish
-</button>
-
-<button class="btn-gray" onclick="logout()">
-    Chiqish
-</button>
-
-        </div>
-
+<main class="container">
+  <div class="topbar">
+    <div class="brand"><h1>K-TUNGSTEN</h1><p>HR — xodimlar boshqaruv paneli</p></div>
+    <div class="actions">
+      <button class="btn btn-green" id="addEmployeeBtn">+ Xodim qo‘shish</button>
+      <button class="btn btn-blue" id="addVacancyBtn">+ Vakansiya qo‘shish</button>
+      <button class="btn btn-gray" id="logoutBtn">Chiqish</button>
     </div>
-
-
-    <!-- STATISTICS -->
-
-    <div class="stats">
-
-        <div class="stat">
-            <div class="stat-title">Jami xodimlar</div>
-            <div class="stat-number" id="totalCount">0</div>
-        </div>
-
-        <div class="stat">
-            <div class="stat-title">Faol xodimlar</div>
-            <div class="stat-number" id="activeCount">0</div>
-        </div>
-
-        <div class="stat">
-            <div class="stat-title">Ta'tilda</div>
-            <div class="stat-number" id="vacationCount">0</div>
-        </div>
-
-        <div class="stat">
-            <div class="stat-title">Ishdan ketgan</div>
-            <div class="stat-number" id="firedCount">0</div>
-        </div>
-
-    </div>
-
-
-    <!-- TABLE -->
-
-    <div class="card">
-
-        <div class="controls">
-
-            <input
-                type="text"
-                id="search"
-                placeholder="🔎 Ism, familiya, lavozim yoki telefon..."
-                oninput="render()"
-            >
-
-            <select id="statusFilter" onchange="render()">
-
-                <option value="all">
-                    Barcha statuslar
-                </option>
-
-                <option value="active">
-                    Faol
-                </option>
-
-                <option value="vacation">
-                    Ta'tilda
-                </option>
-
-                <option value="fired">
-                    Ishdan ketgan
-                </option>
-
-            </select>
-
-            <button class="btn-gray" onclick="clearFilters()">
-                Tozalash
-            </button>
-
-        </div>
-
-
-        <div class="table-wrapper">
-
-            <table>
-
-                <thead>
-
-                    <tr>
-
-                        <th>#</th>
-                        <th>F.I.Sh.</th>
-                        <th>Lavozimi</th>
-                        <th>Telefon</th>
-                        <th>Ish tajribasi</th>
-                        <th>Sana</th>
-                        <th>Status</th>
-                        <th>Amallar</th>
-
-                    </tr>
-
-                </thead>
-
-                <tbody id="employeeRows"></tbody>
-
-            </table>
-
-            <div class="empty" id="empty">
-                Hozircha xodimlar mavjud emas.
-            </div>
-
-        </div>
-
-    </div>
-
-</div><!-- =========================
-     KELGAN ARIZALAR
-========================= -->
-
-<div class="card" style="margin-top:25px;">
-
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;gap:15px;flex-wrap:wrap;">
-
-    <div>
-      <h2 style="margin:0;">📩 Kelgan arizalar</h2>
-
-      <p style="margin:6px 0 0;color:#9aa8bd;">
-        Sayt orqali yuborilgan nomzodlar
-      </p>
-    </div>
-
-    <button
-      class="btn-blue"
-      type="button"
-      onclick="loadApplications()">
-      🔄 Yangilash
-    </button>
-
   </div>
 
-  <div style="overflow-x:auto;">
+  <section class="stats">
+    <div class="stat"><div class="stat-title">Jami xodimlar</div><div class="stat-number" id="totalCount">0</div></div>
+    <div class="stat"><div class="stat-title">Faol xodimlar</div><div class="stat-number" id="activeCount">0</div></div>
+    <div class="stat"><div class="stat-title">Ta'tilda</div><div class="stat-number" id="vacationCount">0</div></div>
+    <div class="stat"><div class="stat-title">Ishdan ketgan</div><div class="stat-number" id="firedCount">0</div></div>
+  </section>
 
-    <table style="width:100%;border-collapse:collapse;">
+  <section class="card">
+    <div class="card-head"><div><h2>👥 Xodimlar</h2><p>Ichki xodimlar bazasi</p></div></div>
+    <div class="controls">
+      <input id="search" placeholder="🔎 Ism, familiya, lavozim yoki telefon...">
+      <select id="statusFilter"><option value="all">Barcha statuslar</option><option value="active">Faol</option><option value="vacation">Ta'tilda</option><option value="fired">Ishdan ketgan</option></select>
+      <button class="btn btn-gray" id="clearFiltersBtn">Tozalash</button>
+    </div>
+    <div class="table-wrap">
+      <table><thead><tr><th>#</th><th>F.I.Sh.</th><th>Lavozimi</th><th>Telefon</th><th>Ish tajribasi</th><th>Sana</th><th>Status</th><th>Amallar</th></tr></thead><tbody id="employeeRows"></tbody></table>
+      <div class="empty" id="employeeEmpty">Hozircha xodimlar mavjud emas.</div>
+    </div>
+  </section>
 
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>F.I.Sh.</th>
-          <th>Telefon</th>
-          <th>Vakansiya</th>
-          <th>Sana</th>
-          <th>CV</th>
-          <th>Ma'lumot</th>
-        </tr>
-      </thead>
-
-      <tbody id="applicationRows">
-        <tr>
-          <td colspan="7"
-              style="text-align:center;padding:30px;color:#9aa8bd;">
-            Arizalar yuklanmoqda...
-          </td>
-        </tr>
-      </tbody>
-
-    </table>
-
-  </div>
-
-</div>
-
-
-<!-- ADD / EDIT MODAL -->
+  <section class="card">
+    <div class="card-head">
+      <div><h2>📩 Kelgan arizalar</h2><p>Sayt orqali yuborilgan nomzodlar</p></div>
+      <button class="btn btn-blue" id="refreshApplicationsBtn">🔄 Yangilash</button>
+    </div>
+    <div class="notice" id="applicationsNotice">Arizalar yuklanmoqda...</div>
+    <div class="table-wrap">
+      <table><thead><tr><th>#</th><th>F.I.Sh.</th><th>Telefon</th><th>Vakansiya</th><th>Sana</th><th>CV</th><th>Ma'lumot</th></tr></thead><tbody id="applicationRows"></tbody></table>
+    </div>
+  </section>
+</main>
 
 <div class="modal" id="employeeModal">
-
-    <div class="modal-box">
-
-        <h2 id="modalTitle">
-            Yangi xodim
-        </h2>
-
-        <div class="form-grid">
-
-            <div class="form-group">
-
-                <label>F.I.Sh.</label>
-
-                <input
-                    id="name"
-                    type="text"
-                    placeholder="Masalan: Aliyev Aziz"
-                >
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>Lavozimi</label>
-
-                <input
-                    id="job"
-                    type="text"
-                    placeholder="Masalan: Muhandis"
-                >
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>Telefon</label>
-
-                <input
-                    id="phone"
-                    type="text"
-                    placeholder="+998 90 123 45 67"
-                >
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>Ish tajribasi</label>
-
-                <input
-                    id="experience"
-                    type="text"
-                    placeholder="3 yil"
-                >
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>Ishga kirgan sana</label>
-
-                <input
-                    id="date"
-                    type="date"
-                >
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>Status</label>
-
-                <select id="status">
-
-                    <option value="active">
-                        Faol
-                    </option>
-
-                    <option value="vacation">
-                        Ta'tilda
-                    </option>
-
-                    <option value="fired">
-                        Ishdan ketgan
-                    </option>
-
-                </select>
-
-            </div>
-
-
-            <div class="form-group full">
-
-                <label>Izoh</label>
-
-                <input
-                    id="note"
-                    type="text"
-                    placeholder="Qo‘shimcha ma'lumot"
-                >
-
-            </div>
-
-        </div>
-
-
-        <div class="modal-buttons">
-
-            <button class="btn-gray" onclick="closeModal()">
-                Bekor qilish
-            </button>
-
-            <button class="btn-blue" onclick="saveEmployee()">
-                Saqlash
-            </button>
-
-        </div>
-
+  <div class="modal-box">
+    <h2 id="employeeModalTitle">Yangi xodim</h2>
+    <div class="form-grid">
+      <div class="form-group"><label>F.I.Sh.</label><input id="employeeName"></div>
+      <div class="form-group"><label>Lavozimi</label><input id="employeeJob"></div>
+      <div class="form-group"><label>Telefon</label><input id="employeePhone" placeholder="+998 90 123 45 67"></div>
+      <div class="form-group"><label>Ish tajribasi</label><input id="employeeExperience"></div>
+      <div class="form-group"><label>Ishga kirgan sana</label><input id="employeeDate" type="date"></div>
+      <div class="form-group"><label>Status</label><select id="employeeStatus"><option value="active">Faol</option><option value="vacation">Ta'tilda</option><option value="fired">Ishdan ketgan</option></select></div>
+      <div class="form-group full"><label>Izoh</label><input id="employeeNote"></div>
     </div>
-
+    <div class="modal-actions"><button class="btn btn-gray" id="closeEmployeeBtn">Bekor qilish</button><button class="btn btn-blue" id="saveEmployeeBtn">Saqlash</button></div>
+  </div>
 </div>
 
-
-<script>
-
-/* =========================
-   ADMIN
-========================= */
-
-/*
-   Xohlasangiz bu parolni o'zgartiring.
-   Hozirgi parol:
-   KTUNGSTEN2026
-*/
-
-const ADMIN_PASSWORD = "KTUNGSTEN2026";
-    /* =========================
-   GOOGLE SHEETS ARIZALARI
-========================= */
-
-const HR_API_URL =
-  "https://script.google.com/macros/s/AKfycbxOH_jZNzmP60aidplfRsSjBeyAq0FDwxuGS1QrGMRh3_Ppwb2TmiaZJO1BPpOlZYqf/exec";
-
-let applications = [];
-
-function loadApplications() {
-
-    return new Promise(function(resolve, reject) {
-
-       const callbackName = "ktungstenApplicationsCallback";
-        const script = document.createElement("script");
-
-        let finished = false;
-
-        function cleanup() {
-            if (script.parentNode) {
-                script.parentNode.removeChild(script);
-            }
-
-            try {
-                delete window[callbackName];
-            } catch (e) {
-                window[callbackName] = undefined;
-            }
-        }
-
-        const timer = setTimeout(function() {
-
-            if (finished) return;
-
-            finished = true;
-            cleanup();
-
-            const tbody = document.getElementById("applicationRows");
-
-            if (tbody) {
-                tbody.innerHTML = `
-                    <tr>
-                        <td colspan="7"
-                            style="text-align:center;color:#ff7777;padding:25px;">
-                            ❌ Arizalarni yuklash vaqti tugadi.
-                        </td>
-                    </tr>
-                `;
-            }
-
-            reject(new Error("Server javobi kelmadi."));
-
-        }, 15000);
-
-        window[callbackName] = function(result) {
-
-            if (finished) return;
-
-            finished = true;
-            clearTimeout(timer);
-            cleanup();
-
-            if (!result || !result.success) {
-
-                const error =
-                    result && result.error
-                        ? result.error
-                        : "Arizalarni yuklab bo‘lmadi.";
-
-                const tbody =
-                    document.getElementById("applicationRows");
-
-                if (tbody) {
-                    tbody.innerHTML = `
-                        <tr>
-                            <td colspan="7"
-                                style="text-align:center;color:#ff7777;padding:25px;">
-                                ❌ ${escapeHtml(error)}
-                            </td>
-                        </tr>
-                    `;
-                }
-
-                reject(new Error(error));
-                return;
-            }
-
-            applications =
-                Array.isArray(result.applications)
-                    ? result.applications
-                    : [];
-
-            renderApplications();
-
-            resolve(applications);
-        };
-
-        script.onerror = function() {
-
-            if (finished) return;
-
-            finished = true;
-            clearTimeout(timer);
-            cleanup();
-
-            const tbody =
-                document.getElementById("applicationRows");
-
-            if (tbody) {
-                tbody.innerHTML = `
-                    <tr>
-                        <td colspan="7"
-                            style="text-align:center;color:#ff7777;padding:25px;">
-                            ❌ Google Apps Script serveriga ulanib bo‘lmadi.
-                        </td>
-                    </tr>
-                `;
-            }
-
-            reject(
-                new Error("Google Apps Script serveriga ulanib bo‘lmadi.")
-            );
-        };
-
-        script.src =
-            HR_API_URL +
-            "?action=applications" +
-            "&callback=" +
-            encodeURIComponent(callbackName) +
-            "&t=" +
-            Date.now();
-
-        document.body.appendChild(script);
-    });
-}
-function renderApplications() {
-  const tbody = document.getElementById("applicationRows");
-
-  if (!tbody) return;
-
-  tbody.innerHTML = "";
-
-  if (!applications.length) {
-    tbody.innerHTML = `
-      <tr>
-        <td colspan="7" style="text-align:center;padding:30px;color:#8ea0b5;">
-          Hozircha arizalar mavjud emas.
-        </td>
-      </tr>
-    `;
-    return;
-  }
-
-  applications.forEach((app, index) => {
-    const row = document.createElement("tr");
-
-    const cv = app["CV"] || "";
-
-    row.innerHTML = `
-      <td>${index + 1}</td>
-
-      <td>
-        <strong>${escapeHtml(app["F.I.Sh."] || "—")}</strong><br>
-        <small>${escapeHtml(app["ID"] || "")}</small>
-      </td>
-
-      <td>${escapeHtml(app["Telefon"] || "—")}</td>
-
-      <td>${escapeHtml(app["Vakansiya"] || "—")}</td>
-
-      <td>${escapeHtml(app["Sana"] || "—")}</td>
-
-      <td>
-        ${
-          cv
-            ? `<a href="${escapeHtml(cv)}"
-                  target="_blank"
-                  style="color:#4d9aff;">
-                  📎 CV
-               </a>`
-            : "—"
-        }
-      </td>
-
-      <td>
-        <details>
-          <summary style="cursor:pointer;color:#4d9aff;">
-            Ko‘rish
-          </summary>
-
-          <div style="padding-top:10px;line-height:1.7;font-size:12px;">
-            <b>Tug‘ilgan sana:</b>
-            ${escapeHtml(app["Tug‘ilgan sana"] || "—")}<br>
-
-            <b>Manzil:</b>
-            ${escapeHtml(app["Manzil"] || "—")}<br>
-
-            <b>Ma’lumoti:</b>
-            ${escapeHtml(app["Ma’lumoti"] || "—")}<br>
-
-            <b>Ish tajribasi:</b>
-            ${escapeHtml(app["Ish tajribasi"] || "—")}<br>
-
-            <b>O‘zi haqida:</b>
-            ${escapeHtml(app["O‘zi haqida"] || "—")}
-          </div>
-        </details>
-      </td>
-    `;
-
-    tbody.appendChild(row);
-  });
-}
-
-
-/* =========================
-   DATABASE
-========================= */
-
-let employees = JSON.parse(
-    localStorage.getItem("ktungsten_employees") || "[]"
-);
-
-let editingId = null;
-
-
-/* =========================
-   LOGIN
-========================= */
-
-function login() {
-
-    const password =
-        document.getElementById("adminPassword").value;
-
-    if (password === ADMIN_PASSWORD) {
-
-        localStorage.setItem(
-            "ktungsten_logged_in",
-            "true"
-        );
-
-        document.getElementById(
-            "loginScreen"
-        ).style.display = "none";
-
-        render();
-        loadApplications();
-
-    } else {
-
-        document.getElementById(
-            "loginError"
-        ).style.display = "block";
-
-    }
-
-}
-
-
-function logout() {
-
-    localStorage.removeItem(
-        "ktungsten_logged_in"
-    );
-
-    location.reload();
-
-}
-
-
-/* =========================
-   SAVE DATABASE
-========================= */
-
-function saveDatabase() {
-
-    localStorage.setItem(
-        "ktungsten_employees",
-        JSON.stringify(employees)
-    );
-
-}
-
-
-/* =========================
-   MODAL
-========================= */
-
-function openAddModal() {
-
-    editingId = null;
-
-    document.getElementById(
-        "modalTitle"
-    ).textContent = "Yangi xodim";
-
-    document.getElementById("name").value = "";
-    document.getElementById("job").value = "";
-    document.getElementById("phone").value = "";
-    document.getElementById("experience").value = "";
-    document.getElementById("date").value = "";
-    document.getElementById("status").value = "active";
-    document.getElementById("note").value = "";
-
-    document.getElementById(
-        "employeeModal"
-    ).classList.add("active");
-
-}
-
-
-function closeModal() {
-
-    document.getElementById(
-        "employeeModal"
-    ).classList.remove("active");
-
-}
-
-
-/* =========================
-   SAVE EMPLOYEE
-========================= */
-
-function saveEmployee() {
-
-    const name =
-        document.getElementById("name").value.trim();
-
-    const job =
-        document.getElementById("job").value.trim();
-
-    const phone =
-        document.getElementById("phone").value.trim();
-
-    const experience =
-        document.getElementById("experience").value.trim();
-
-    const date =
-        document.getElementById("date").value;
-
-    const status =
-        document.getElementById("status").value;
-
-    const note =
-        document.getElementById("note").value.trim();
-
-
-    if (!name) {
-
-        alert("F.I.Sh. ni kiriting!");
-
-        return;
-
-    }
-
-
-    if (editingId) {
-
-        const employee =
-            employees.find(
-                x => x.id === editingId
-            );
-
-        if (employee) {
-
-            employee.name = name;
-            employee.job = job;
-            employee.phone = phone;
-            employee.experience = experience;
-            employee.date = date;
-            employee.status = status;
-            employee.note = note;
-
-        }
-
-    } else {
-
-        employees.push({
-
-            id: Date.now(),
-
-            name: name,
-
-            job: job,
-
-            phone: phone,
-
-            experience: experience,
-
-            date: date,
-
-            status: status,
-
-            note: note
-
-        });
-
-    }
-
-
-    saveDatabase();
-
-    closeModal();
-
-    render();
-
-}
-
-
-/* =========================
-   EDIT
-========================= */
-
-function editEmployee(id) {
-
-    const employee =
-        employees.find(
-            x => x.id === id
-        );
-
-    if (!employee) return;
-
-    editingId = id;
-
-    document.getElementById(
-        "modalTitle"
-    ).textContent = "Xodimni tahrirlash";
-
-    document.getElementById("name").value =
-        employee.name || "";
-
-    document.getElementById("job").value =
-        employee.job || "";
-
-    document.getElementById("phone").value =
-        employee.phone || "";
-
-    document.getElementById("experience").value =
-        employee.experience || "";
-
-    document.getElementById("date").value =
-        employee.date || "";
-
-    document.getElementById("status").value =
-        employee.status || "active";
-
-    document.getElementById("note").value =
-        employee.note || "";
-
-    document.getElementById(
-        "employeeModal"
-    ).classList.add("active");
-
-}
-
-
-/* =========================
-   DELETE
-========================= */
-
-function deleteEmployee(id) {
-
-    const employee =
-        employees.find(
-            x => x.id === id
-        );
-
-    if (!employee) return;
-
-
-    if (
-        confirm(
-            `"${employee.name}" xodimini o‘chirishni xohlaysizmi?`
-        )
-    ) {
-
-        employees =
-            employees.filter(
-                x => x.id !== id
-            );
-
-        saveDatabase();
-
-        render();
-
-    }
-
-}
-
-
-/* =========================
-   STATUS
-========================= */
-
-function statusText(status) {
-
-    if (status === "active")
-        return "Faol";
-
-    if (status === "vacation")
-        return "Ta'tilda";
-
-    if (status === "fired")
-        return "Ishdan ketgan";
-
-    return status;
-
-}
-
-
-function statusClass(status) {
-
-    if (status === "active")
-        return "status-active";
-
-    if (status === "vacation")
-        return "status-vacation";
-
-    if (status === "fired")
-        return "status-fired";
-
-    return "";
-
-}
-
-
-/* =========================
-   DATE
-========================= */
-
-function formatDate(date) {
-
-    if (!date)
-        return "—";
-
-    const parts =
-        date.split("-");
-
-    if (parts.length !== 3)
-        return date;
-
-    return `${parts[2]}.${parts[1]}.${parts[0]}`;
-
-}
-
-
-/* =========================
-   RENDER
-========================= */
-
-function render() {
-
-    const search =
-        document.getElementById(
-            "search"
-        ).value
-        .toLowerCase()
-        .trim();
-
-
-    const statusFilter =
-        document.getElementById(
-            "statusFilter"
-        ).value;
-
-
-    let filtered =
-        employees.filter(employee => {
-
-            const text = (
-
-                employee.name + " " +
-                employee.job + " " +
-                employee.phone + " " +
-                employee.experience
-
-            ).toLowerCase();
-
-
-            const searchMatch =
-                !search ||
-                text.includes(search);
-
-
-            const statusMatch =
-                statusFilter === "all" ||
-                employee.status === statusFilter;
-
-
-            return searchMatch &&
-                   statusMatch;
-
-        });
-
-
-    const tbody =
-        document.getElementById(
-            "employeeRows"
-        );
-
-
-    const empty =
-        document.getElementById(
-            "empty"
-        );
-
-
-    tbody.innerHTML = "";
-
-
-    if (filtered.length === 0) {
-
-        empty.style.display = "block";
-
-    } else {
-
-        empty.style.display = "none";
-
-
-        filtered.forEach(
-            (employee, index) => {
-
-                const row =
-                    document.createElement("tr");
-
-
-                row.innerHTML = `
-
-                    <td>${index + 1}</td>
-
-                    <td>
-                        <strong>
-                            ${escapeHtml(employee.name)}
-                        </strong>
-
-                        ${
-                            employee.note
-                            ? `<br>
-                               <small style="color:#8190a7">
-                               ${escapeHtml(employee.note)}
-                               </small>`
-                            : ""
-                        }
-                    </td>
-
-                    <td>
-                        ${escapeHtml(employee.job || "—")}
-                    </td>
-
-                    <td>
-                        ${escapeHtml(employee.phone || "—")}
-                    </td>
-
-                    <td>
-                        ${escapeHtml(employee.experience || "—")}
-                    </td>
-
-                    <td>
-                        ${formatDate(employee.date)}
-                    </td>
-
-                    <td>
-                        <span class="status ${statusClass(employee.status)}">
-                            ${statusText(employee.status)}
-                        </span>
-                    </td>
-
-                    <td>
-
-                        <div class="actions">
-
-                            <button
-                                class="btn-blue"
-                                onclick="editEmployee(${employee.id})"
-                            >
-                                ✏️
-                            </button>
-
-                            <button
-                                class="btn-red"
-                                onclick="deleteEmployee(${employee.id})"
-                            >
-                                🗑️
-                            </button>
-
-                        </div>
-
-                    </td>
-
-                `;
-
-
-                tbody.appendChild(row);
-
-            }
-        );
-
-    }
-
-
-    updateStats();
-
-}
-
-
-/* =========================
-   STATISTICS
-========================= */
-
-function updateStats() {
-
-    document.getElementById(
-        "totalCount"
-    ).textContent =
-        employees.length;
-
-
-    document.getElementById(
-        "activeCount"
-    ).textContent =
-        employees.filter(
-            x => x.status === "active"
-        ).length;
-
-
-    document.getElementById(
-        "vacationCount"
-    ).textContent =
-        employees.filter(
-            x => x.status === "vacation"
-        ).length;
-
-
-    document.getElementById(
-        "firedCount"
-    ).textContent =
-        employees.filter(
-            x => x.status === "fired"
-        ).length;
-
-}
-
-
-/* =========================
-   CLEAR FILTERS
-========================= */
-
-function clearFilters() {
-
-    document.getElementById(
-        "search"
-    ).value = "";
-
-    document.getElementById(
-        "statusFilter"
-    ).value = "all";
-
-    render();
-
-}
-
-
-/* =========================
-   SECURITY
-========================= */
-
-function escapeHtml(text) {
-
-    return String(text)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-
-}
-
-
-/* =========================
-   START
-========================= */
-
-if (
-    localStorage.getItem(
-        "ktungsten_logged_in"
-    ) === "true"
-) {
-
-    document.getElementById(
-        "loginScreen"
-    ).style.display = "none";
-
-    render();
-    loadApplications();
-
-} else {
-
-    render();
-
-}
-
-
-/* MODAL OUTSIDE CLICK */
-
-document.getElementById(
-    "employeeModal"
-).addEventListener(
-    "click",
-    function(e) {
-
-        if (e.target === this) {
-            closeModal();
-        }
-
-    }
-);
-
-</script>
-
-
-<!-- VACANCY MODAL -->
 <div class="modal" id="vacancyModal">
-    <div class="modal-box">
-
-        <button class="modal-close" onclick="closeVacancyModal()">×</button>
-
-        <h2>Yangi vakansiya qo‘shish</h2>
-
-        <label>Lavozim</label>
-        <input id="vacancyTitle" type="text"
-               placeholder="Masalan: Shina montajchisi">
-
-        <label>Manzil</label>
-        <input id="vacancyLocation" type="text"
-               placeholder="Masalan: Uchquduq tumani">
-
-        <label>Ish turi</label>
-        <select id="vacancyType">
-            <option>To‘liq ish kuni</option>
-            <option>Smenali</option>
-            <option>Qisman ish kuni</option>
-        </select>
-
-        <label>Tajriba</label>
-        <input id="vacancyExperience" type="text"
-               placeholder="Masalan: 1–3 yil">
-
-        <label>Maosh</label>
-        <input id="vacancySalary" type="text"
-               placeholder="Masalan: Suhbat asosida">
-
-        <label>Tavsif</label>
-        <textarea id="vacancyDescription"
-                  placeholder="Vakansiya haqida ma'lumot..."></textarea>
-
-        <div style="margin-top:20px;display:flex;gap:10px;">
-            <button class="btn-gray"
-                    onclick="closeVacancyModal()">
-                Bekor qilish
-            </button>
-
-            <button class="btn-blue"
-                    onclick="saveVacancy()">
-                Vakansiyani saqlash
-            </button>
-        </div>
-
+  <div class="modal-box">
+    <h2>Yangi vakansiya qo‘shish</h2>
+    <div class="form-grid">
+      <div class="form-group full"><label>Lavozim</label><input id="vacancyTitle" placeholder="Masalan: Shina montajchisi"></div>
+      <div class="form-group"><label>Manzil</label><input id="vacancyLocation" placeholder="Masalan: Uchquduq tumani"></div>
+      <div class="form-group"><label>Ish turi</label><select id="vacancyType"><option>To‘liq ish kuni</option><option>Smenali</option><option>Qisman ish kuni</option></select></div>
+      <div class="form-group"><label>Tajriba</label><input id="vacancyExperience" placeholder="Masalan: 1–3 yil"></div>
+      <div class="form-group"><label>Maosh</label><input id="vacancySalary" placeholder="Masalan: Suhbat asosida"></div>
+      <div class="form-group full"><label>Tavsif</label><textarea id="vacancyDescription"></textarea></div>
     </div>
+    <div class="modal-actions"><button class="btn btn-gray" id="closeVacancyBtn">Bekor qilish</button><button class="btn btn-blue" id="saveVacancyBtn">Vakansiyani saqlash</button></div>
+  </div>
 </div>
 
-<script>
-function openVacancyModal(){
-    document.getElementById("vacancyModal").style.display = "flex";
-}
+<iframe id="applicationsBridge" title="Applications bridge" style="display:none"></iframe>
 
-function closeVacancyModal(){
-    document.getElementById("vacancyModal").style.display = "none";
+<script>
+const ADMIN_PASSWORD="KTUNGSTEN2026";
+const HR_API_URL="https://script.google.com/macros/s/AKfycbxOH_jZNzmP60aidplfRsSjBeyAq0FDwxuGS1QrGMRh3_Ppwb2TmiaZJO1BPpOlZYqf/exec";
+const EMPLOYEE_STORAGE="ktungsten_employees", VACANCY_STORAGE="ktungsten_vacancies", LOGIN_STORAGE="ktungsten_logged_in";
+let employees=[], applications=[], editingEmployeeId=null, applicationRequestTimeout=null;
+const $=id=>document.getElementById(id);
+
+function escapeHtml(v){return String(v??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;")}
+function formatDate(v){if(!v)return"—";const s=String(v);if(s.includes("T")){const d=new Date(s);if(!Number.isNaN(d.getTime()))return d.toLocaleString("uz-UZ")}if(/^\d{4}-\d{2}-\d{2}$/.test(s)){const [y,m,d]=s.split("-");return`${d}.${m}.${y}`}return s}
+function statusText(s){return s==="active"?"Faol":s==="vacation"?"Ta'tilda":s==="fired"?"Ishdan ketgan":s||"—"}
+function statusClass(s){return s==="active"?"status-active":s==="vacation"?"status-vacation":s==="fired"?"status-fired":""}
+
+function loadLocalData(){try{const x=JSON.parse(localStorage.getItem(EMPLOYEE_STORAGE)||"[]");employees=Array.isArray(x)?x:[]}catch{employees=[]}}
+function saveEmployees(){localStorage.setItem(EMPLOYEE_STORAGE,JSON.stringify(employees))}
+
+function renderEmployees(){
+  const q=$("search").value.trim().toLowerCase(), sf=$("statusFilter").value;
+  const list=employees.filter(e=>{const t=[e.name,e.job,e.phone,e.experience].join(" ").toLowerCase();return(!q||t.includes(q))&&(sf==="all"||e.status===sf)});
+  const tb=$("employeeRows");tb.innerHTML="";$("employeeEmpty").style.display=list.length?"none":"block";
+  list.forEach((e,i)=>{const r=document.createElement("tr");r.innerHTML=`<td>${i+1}</td><td><strong>${escapeHtml(e.name)}</strong>${e.note?`<div class="small">${escapeHtml(e.note)}</div>`:""}</td><td>${escapeHtml(e.job||"—")}</td><td>${escapeHtml(e.phone||"—")}</td><td>${escapeHtml(e.experience||"—")}</td><td>${formatDate(e.date)}</td><td><span class="status ${statusClass(e.status)}">${escapeHtml(statusText(e.status))}</span></td><td><div class="row-actions"><button class="btn-blue" onclick="editEmployee(${Number(e.id)})">✏️</button><button class="btn-red" onclick="deleteEmployee(${Number(e.id)})">🗑️</button></div></td>`;tb.appendChild(r)});
+  $("totalCount").textContent=employees.length;$("activeCount").textContent=employees.filter(x=>x.status==="active").length;$("vacationCount").textContent=employees.filter(x=>x.status==="vacation").length;$("firedCount").textContent=employees.filter(x=>x.status==="fired").length;
 }
+function openEmployeeModal(e=null){editingEmployeeId=e?e.id:null;$("employeeModalTitle").textContent=e?"Xodimni tahrirlash":"Yangi xodim";$("employeeName").value=e?.name||"";$("employeeJob").value=e?.job||"";$("employeePhone").value=e?.phone||"";$("employeeExperience").value=e?.experience||"";$("employeeDate").value=e?.date||"";$("employeeStatus").value=e?.status||"active";$("employeeNote").value=e?.note||"";$("employeeModal").classList.add("show")}
+function closeEmployeeModal(){$("employeeModal").classList.remove("show")}
+function saveEmployee(){const n=$("employeeName").value.trim();if(!n){alert("F.I.Sh. ni kiriting.");return}const d={id:editingEmployeeId??Date.now(),name:n,job:$("employeeJob").value.trim(),phone:$("employeePhone").value.trim(),experience:$("employeeExperience").value.trim(),date:$("employeeDate").value,status:$("employeeStatus").value,note:$("employeeNote").value.trim()};if(editingEmployeeId){const i=employees.findIndex(x=>x.id===editingEmployeeId);if(i>=0)employees[i]=d}else employees.push(d);saveEmployees();renderEmployees();closeEmployeeModal()}
+function editEmployee(id){const e=employees.find(x=>x.id===id);if(e)openEmployeeModal(e)}
+function deleteEmployee(id){const e=employees.find(x=>x.id===id);if(!e)return;if(!confirm(`"${e.name}" xodimini o‘chirishni xohlaysizmi?`))return;employees=employees.filter(x=>x.id!==id);saveEmployees();renderEmployees()}
 
 function saveVacancy(){
-
-    const vacancy = {
-        id: Date.now(),
-        title: document.getElementById("vacancyTitle").value.trim(),
-        location: document.getElementById("vacancyLocation").value.trim(),
-        type: document.getElementById("vacancyType").value,
-        experience: document.getElementById("vacancyExperience").value.trim(),
-        salary: document.getElementById("vacancySalary").value.trim(),
-        description: document.getElementById("vacancyDescription").value.trim(),
-        status: "active",
-        date: new Date().toLocaleDateString("uz-UZ")
-    };
-
-    if(!vacancy.title){
-        alert("Lavozim nomini kiriting!");
-        return;
-    }
-
-    let vacancies =
-        JSON.parse(localStorage.getItem("ktungsten_vacancies") || "[]");
-
-    vacancies.push(vacancy);
-
-    localStorage.setItem(
-        "ktungsten_vacancies",
-        JSON.stringify(vacancies)
-    );
-
-    alert("Vakansiya muvaffaqiyatli qo‘shildi!");
-
-    closeVacancyModal();
-
-    document.getElementById("vacancyTitle").value = "";
-    document.getElementById("vacancyLocation").value = "";
-    document.getElementById("vacancyExperience").value = "";
-    document.getElementById("vacancySalary").value = "";
-    document.getElementById("vacancyDescription").value = "";
+  const v={id:Date.now(),title:$("vacancyTitle").value.trim(),location:$("vacancyLocation").value.trim()||"Uchquduq",type:$("vacancyType").value,experience:$("vacancyExperience").value.trim()||"Talab qilinmaydi",salary:$("vacancySalary").value.trim()||"Suhbat asosida",description:$("vacancyDescription").value.trim(),status:"active",new:true};
+  if(!v.title){alert("Lavozim nomini kiriting.");return}
+  let list=[];try{const x=JSON.parse(localStorage.getItem(VACANCY_STORAGE)||"[]");list=Array.isArray(x)?x:[]}catch{}
+  list.push(v);localStorage.setItem(VACANCY_STORAGE,JSON.stringify(list));alert("Vakansiya muvaffaqiyatli qo‘shildi.");$("vacancyModal").classList.remove("show");["vacancyTitle","vacancyLocation","vacancyExperience","vacancySalary","vacancyDescription"].forEach(id=>$(id).value="")
 }
-</script>
 
+function renderApplications(){
+  const tb=$("applicationRows");tb.innerHTML="";
+  if(!applications.length){$("applicationsNotice").className="notice";$("applicationsNotice").textContent="Hozircha arizalar mavjud emas.";return}
+  $("applicationsNotice").className="notice ok";$("applicationsNotice").textContent=`${applications.length} ta ariza yuklandi.`;
+  applications.forEach((a,i)=>{const r=document.createElement("tr");const cv=a["CV"]||"";r.innerHTML=`<td>${i+1}<div class="small">${escapeHtml(a["ID"]||"")}</div></td><td><strong>${escapeHtml(a["F.I.Sh."]||"—")}</strong></td><td>${escapeHtml(a["Telefon"]||"—")}</td><td>${escapeHtml(a["Vakansiya"]||"—")}</td><td>${escapeHtml(formatDate(a["Sana"]))}</td><td>${cv?`<a class="cv-link" href="${escapeHtml(cv)}" target="_blank" rel="noopener noreferrer">📎 CV</a>`:"—"}</td><td><details class="application-details"><summary>Ko‘rish</summary><div><b>Tug‘ilgan sana:</b> ${escapeHtml(formatDate(a["Tug‘ilgan sana"]))}<br><b>Manzil:</b> ${escapeHtml(a["Manzil"]||"—")}<br><b>Ma’lumoti:</b> ${escapeHtml(a["Ma’lumoti"]||"—")}<br><b>Ish tajribasi:</b> ${escapeHtml(a["Ish tajribasi"]||"—")}<br><b>O‘zi haqida:</b> ${escapeHtml(a["O‘zi haqida"]||"—")}<br><b>Manba:</b> ${escapeHtml(a["Manba"]||"—")}</div></details></td>`;tb.appendChild(r)})
+}
+
+function requestApplications(){
+  $("applicationsNotice").className="notice";$("applicationsNotice").textContent="Arizalar yuklanmoqda...";
+  if(applicationRequestTimeout)clearTimeout(applicationRequestTimeout);
+  $("applicationsBridge").src=HR_API_URL+"?action=applications&t="+Date.now();
+  applicationRequestTimeout=setTimeout(()=>{$("applicationsNotice").className="notice error";$("applicationsNotice").textContent="❌ Google Apps Script serveridan javob kelmadi."},15000);
+}
+
+window.addEventListener("message",e=>{
+  if(!e.data||e.data.type!=="KT_APPLICATIONS")return;
+  if(applicationRequestTimeout){clearTimeout(applicationRequestTimeout);applicationRequestTimeout=null}
+  const p=e.data.payload||{};
+  if(!p.success){$("applicationsNotice").className="notice error";$("applicationsNotice").textContent="❌ "+(p.error||"Arizalarni yuklab bo‘lmadi.");return}
+  applications=Array.isArray(p.applications)?p.applications:[];renderApplications();
+});
+
+function login(){if($("adminPassword").value===ADMIN_PASSWORD){localStorage.setItem(LOGIN_STORAGE,"true");$("loginScreen").classList.add("hidden");renderEmployees();requestApplications()}else $("loginError").style.display="block"}
+function logout(){localStorage.removeItem(LOGIN_STORAGE);$("loginScreen").classList.remove("hidden")}
+$("loginBtn").addEventListener("click",login);$("adminPassword").addEventListener("keydown",e=>{if(e.key==="Enter")login()});$("logoutBtn").addEventListener("click",logout);$("addEmployeeBtn").addEventListener("click",()=>openEmployeeModal());$("closeEmployeeBtn").addEventListener("click",closeEmployeeModal);$("saveEmployeeBtn").addEventListener("click",saveEmployee);$("addVacancyBtn").addEventListener("click",()=>$("vacancyModal").classList.add("show"));$("closeVacancyBtn").addEventListener("click",()=>$("vacancyModal").classList.remove("show"));$("saveVacancyBtn").addEventListener("click",saveVacancy);$("refreshApplicationsBtn").addEventListener("click",requestApplications);$("search").addEventListener("input",renderEmployees);$("statusFilter").addEventListener("change",renderEmployees);$("clearFiltersBtn").addEventListener("click",()=>{$("search").value="";$("statusFilter").value="all";renderEmployees()});$("employeeModal").addEventListener("click",e=>{if(e.target===$("employeeModal"))closeEmployeeModal()});$("vacancyModal").addEventListener("click",e=>{if(e.target===$("vacancyModal"))$("vacancyModal").classList.remove("show")});
+loadLocalData();renderEmployees();if(localStorage.getItem(LOGIN_STORAGE)==="true"){$("loginScreen").classList.add("hidden");requestApplications()}
+</script>
 </body>
 </html>
