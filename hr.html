@@ -688,46 +688,132 @@ const HR_API_URL =
 
 let applications = [];
 
-async function loadApplications() {
-  try {
-    const response = await fetch(
-      HR_API_URL + "?action=applications",
-      {
-        method: "GET",
-        cache: "no-store"
-      }
-    );
+function loadApplications() {
 
-    const result = await response.json();
+    return new Promise(function(resolve, reject) {
 
-    if (!result.success) {
-      throw new Error(result.error || "Arizalarni yuklab bo‘lmadi.");
-    }
+        const callbackName = "ktApplications_" + Date.now();
+        const script = document.createElement("script");
 
-    applications = Array.isArray(result.applications)
-      ? result.applications
-      : [];
+        let finished = false;
 
-    renderApplications();
+        function cleanup() {
+            if (script.parentNode) {
+                script.parentNode.removeChild(script);
+            }
 
-  } catch (error) {
-    console.error("Arizalar xatosi:", error);
+            try {
+                delete window[callbackName];
+            } catch (e) {
+                window[callbackName] = undefined;
+            }
+        }
 
-    const tbody = document.getElementById("applicationRows");
+        const timer = setTimeout(function() {
 
-    if (tbody) {
-      tbody.innerHTML = `
-        <tr>
-          <td colspan="7" style="text-align:center;color:#ff7777;padding:25px;">
-            ❌ Arizalarni yuklashda xatolik:<br>
-            ${escapeHtml(error.message)}
-          </td>
-        </tr>
-      `;
-    }
-  }
+            if (finished) return;
+
+            finished = true;
+            cleanup();
+
+            const tbody = document.getElementById("applicationRows");
+
+            if (tbody) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="7"
+                            style="text-align:center;color:#ff7777;padding:25px;">
+                            ❌ Arizalarni yuklash vaqti tugadi.
+                        </td>
+                    </tr>
+                `;
+            }
+
+            reject(new Error("Server javobi kelmadi."));
+
+        }, 15000);
+
+        window[callbackName] = function(result) {
+
+            if (finished) return;
+
+            finished = true;
+            clearTimeout(timer);
+            cleanup();
+
+            if (!result || !result.success) {
+
+                const error =
+                    result && result.error
+                        ? result.error
+                        : "Arizalarni yuklab bo‘lmadi.";
+
+                const tbody =
+                    document.getElementById("applicationRows");
+
+                if (tbody) {
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="7"
+                                style="text-align:center;color:#ff7777;padding:25px;">
+                                ❌ ${escapeHtml(error)}
+                            </td>
+                        </tr>
+                    `;
+                }
+
+                reject(new Error(error));
+                return;
+            }
+
+            applications =
+                Array.isArray(result.applications)
+                    ? result.applications
+                    : [];
+
+            renderApplications();
+
+            resolve(applications);
+        };
+
+        script.onerror = function() {
+
+            if (finished) return;
+
+            finished = true;
+            clearTimeout(timer);
+            cleanup();
+
+            const tbody =
+                document.getElementById("applicationRows");
+
+            if (tbody) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="7"
+                            style="text-align:center;color:#ff7777;padding:25px;">
+                            ❌ Google Apps Script serveriga ulanib bo‘lmadi.
+                        </td>
+                    </tr>
+                `;
+            }
+
+            reject(
+                new Error("Google Apps Script serveriga ulanib bo‘lmadi.")
+            );
+        };
+
+        script.src =
+            HR_API_URL +
+            "?action=applications" +
+            "&callback=" +
+            encodeURIComponent(callbackName) +
+            "&t=" +
+            Date.now();
+
+        document.body.appendChild(script);
+    });
 }
-
 function renderApplications() {
   const tbody = document.getElementById("applicationRows");
 
