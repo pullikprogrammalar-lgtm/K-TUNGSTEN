@@ -1387,10 +1387,14 @@ if (
         "loginScreen"
     ).style.display = "none";
 
+    render();
+    loadApplications();
+
+} else {
+
+    render();
+
 }
-
-
-render();
 
 
 /* MODAL OUTSIDE CLICK */
@@ -1410,46 +1414,7 @@ document.getElementById(
 
 </script>
 
-</body>
-</html>
-<div id="vacancyModal" class="modal">
-  <div class="modal-box">
-    <button class="modal-close" onclick="closeVacancyModal()">×</button>
 
-    <h2>Yangi vakansiya qo‘shish</h2>
-
-    <label>Lavozim</label>
-    <input id="vacancyTitle" type="text" placeholder="Masalan: Shina montajchisi">
-
-    <label>Manzil</label>
-    <input id="vacancyLocation" type="text" placeholder="Masalan: Uchquduq tumani">
-
-    <label>Ish turi</label>
-    <select id="vacancyType">
-      <option value="To‘liq ish kuni">To‘liq ish kuni</option>
-      <option value="Smenali">Smenali</option>
-      <option value="Qisman">Qisman</option>
-    </select>
-
-    <label>Tajriba</label>
-    <input id="vacancyExperience" type="text" placeholder="Masalan: 1–3 yil">
-
-    <label>Maosh</label>
-    <input id="vacancySalary" type="text" placeholder="Masalan: Suhbat asosida">
-
-    <label>Tavsif</label>
-    <textarea id="vacancyDescription" placeholder="Vakansiya haqida ma'lumot"></textarea>
-
-    <button class="btn-blue" onclick="saveVacancy()">
-      Vakansiyani saqlash
-    </button>
-  </div>
-</div>
-</div>
-
-</div>
-
-<!-- VACANCY MODAL -->
 <!-- VACANCY MODAL -->
 <div class="modal" id="vacancyModal">
     <div class="modal-box">
@@ -1499,54 +1464,56 @@ document.getElementById(
 
     </div>
 </div>
-</div>
 
 <script>
 function openVacancyModal(){
-  document.getElementById("vacancyModal").style.display = "flex";
+    document.getElementById("vacancyModal").style.display = "flex";
 }
 
 function closeVacancyModal(){
-  document.getElementById("vacancyModal").style.display = "none";
+    document.getElementById("vacancyModal").style.display = "none";
 }
 
 function saveVacancy(){
 
-  const vacancy = {
-    id: Date.now(),
-    title: document.getElementById("vacancyTitle").value.trim(),
-    location: document.getElementById("vacancyLocation").value.trim(),
-    type: document.getElementById("vacancyType").value,
-    experience: document.getElementById("vacancyExperience").value.trim(),
-    salary: document.getElementById("vacancySalary").value.trim(),
-    description: document.getElementById("vacancyDescription").value.trim(),
-    status: "active",
-    date: new Date().toLocaleDateString("uz-UZ")
-  };
+    const vacancy = {
+        id: Date.now(),
+        title: document.getElementById("vacancyTitle").value.trim(),
+        location: document.getElementById("vacancyLocation").value.trim(),
+        type: document.getElementById("vacancyType").value,
+        experience: document.getElementById("vacancyExperience").value.trim(),
+        salary: document.getElementById("vacancySalary").value.trim(),
+        description: document.getElementById("vacancyDescription").value.trim(),
+        status: "active",
+        date: new Date().toLocaleDateString("uz-UZ")
+    };
 
-  if(!vacancy.title){
-    alert("Lavozim nomini kiriting!");
-    return;
-  }
+    if(!vacancy.title){
+        alert("Lavozim nomini kiriting!");
+        return;
+    }
 
-  let vacancies =
-    JSON.parse(localStorage.getItem("ktungsten_vacancies") || "[]");
+    let vacancies =
+        JSON.parse(localStorage.getItem("ktungsten_vacancies") || "[]");
 
-  vacancies.push(vacancy);
+    vacancies.push(vacancy);
 
-  localStorage.setItem(
-    "ktungsten_vacancies",
-    JSON.stringify(vacancies)
-  );
+    localStorage.setItem(
+        "ktungsten_vacancies",
+        JSON.stringify(vacancies)
+    );
 
-  alert("Vakansiya muvaffaqiyatli qo‘shildi!");
+    alert("Vakansiya muvaffaqiyatli qo‘shildi!");
 
-  closeVacancyModal();
+    closeVacancyModal();
 
-  document.getElementById("vacancyTitle").value = "";
-  document.getElementById("vacancyLocation").value = "";
-  document.getElementById("vacancyExperience").value = "";
-  document.getElementById("vacancySalary").value = "";
-  document.getElementById("vacancyDescription").value = "";
+    document.getElementById("vacancyTitle").value = "";
+    document.getElementById("vacancyLocation").value = "";
+    document.getElementById("vacancyExperience").value = "";
+    document.getElementById("vacancySalary").value = "";
+    document.getElementById("vacancyDescription").value = "";
 }
 </script>
+
+</body>
+</html>
