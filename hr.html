@@ -625,6 +625,133 @@ tr:hover {
 */
 
 const ADMIN_PASSWORD = "KTUNGSTEN2026";
+    /* =========================
+   GOOGLE SHEETS ARIZALARI
+========================= */
+
+const HR_API_URL =
+  "https://script.google.com/macros/s/AKfycbxOH_jZNzmP60aidplfRsSjBeyAq0FDwxuGS1QrGMRh3_Ppwb2TmiaZJO1BPpOlZYqf/exec";
+
+let applications = [];
+
+async function loadApplications() {
+  try {
+    const response = await fetch(
+      HR_API_URL + "?action=applications",
+      {
+        method: "GET",
+        cache: "no-store"
+      }
+    );
+
+    const result = await response.json();
+
+    if (!result.success) {
+      throw new Error(result.error || "Arizalarni yuklab bo‘lmadi.");
+    }
+
+    applications = Array.isArray(result.applications)
+      ? result.applications
+      : [];
+
+    renderApplications();
+
+  } catch (error) {
+    console.error("Arizalar xatosi:", error);
+
+    const tbody = document.getElementById("applicationRows");
+
+    if (tbody) {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="7" style="text-align:center;color:#ff7777;padding:25px;">
+            ❌ Arizalarni yuklashda xatolik:<br>
+            ${escapeHtml(error.message)}
+          </td>
+        </tr>
+      `;
+    }
+  }
+}
+
+function renderApplications() {
+  const tbody = document.getElementById("applicationRows");
+
+  if (!tbody) return;
+
+  tbody.innerHTML = "";
+
+  if (!applications.length) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="7" style="text-align:center;padding:30px;color:#8ea0b5;">
+          Hozircha arizalar mavjud emas.
+        </td>
+      </tr>
+    `;
+    return;
+  }
+
+  applications.forEach((app, index) => {
+    const row = document.createElement("tr");
+
+    const cv = app["CV"] || "";
+
+    row.innerHTML = `
+      <td>${index + 1}</td>
+
+      <td>
+        <strong>${escapeHtml(app["F.I.Sh."] || "—")}</strong><br>
+        <small>${escapeHtml(app["ID"] || "")}</small>
+      </td>
+
+      <td>${escapeHtml(app["Telefon"] || "—")}</td>
+
+      <td>${escapeHtml(app["Vakansiya"] || "—")}</td>
+
+      <td>${escapeHtml(app["Sana"] || "—")}</td>
+
+      <td>
+        ${
+          cv
+            ? `<a href="${escapeHtml(cv)}"
+                  target="_blank"
+                  style="color:#4d9aff;">
+                  📎 CV
+               </a>`
+            : "—"
+        }
+      </td>
+
+      <td>
+        <details>
+          <summary style="cursor:pointer;color:#4d9aff;">
+            Ko‘rish
+          </summary>
+
+          <div style="padding-top:10px;line-height:1.7;font-size:12px;">
+            <b>Tug‘ilgan sana:</b>
+            ${escapeHtml(app["Tug‘ilgan sana"] || "—")}<br>
+
+            <b>Manzil:</b>
+            ${escapeHtml(app["Manzil"] || "—")}<br>
+
+            <b>Ma’lumoti:</b>
+            ${escapeHtml(app["Ma’lumoti"] || "—")}<br>
+
+            <b>Ish tajribasi:</b>
+            ${escapeHtml(app["Ish tajribasi"] || "—")}<br>
+
+            <b>O‘zi haqida:</b>
+            ${escapeHtml(app["O‘zi haqida"] || "—")}
+          </div>
+        </details>
+      </td>
+    `;
+
+    tbody.appendChild(row);
+  });
+}
 
 
 /* =========================
@@ -659,6 +786,7 @@ function login() {
         ).style.display = "none";
 
         render();
+        loadApplications();
 
     } else {
 
