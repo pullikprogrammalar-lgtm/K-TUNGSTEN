@@ -2,7 +2,7 @@
 // K-TUNGSTEN saytining arizalarini Google Apps Script'ga xavfsiz server tomondan uzatadi.
 
 const GOOGLE_APPS_SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycbxOH_jZNzmP60aidplfRsSjBeyAq0FDwxuGS1QrGMRh3_Ppwb2TmiaZJO1BPpOlZYqf/exec";
+  "https://script.google.com/macros/s/AKfycbxEkpJe2_ucfzKHpdb0fDxyScxRaRRc_2sWkWDaOgGGVMvF91v7IYZWuXwR8T0eveFK/exec";
 
 module.exports = async (req, res) => {
   // CORS: saytning o‘zi bilan ishlash uchun
