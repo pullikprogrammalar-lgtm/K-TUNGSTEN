@@ -1,139 +1,104 @@
-const SHEET_ID = "1zwdoOuRNMNyQaJoFy9hnqWXInUUawqlEwCM7jJRyRa8";
-const SHEET_NAME = "Лист1";
+<!DOCTYPE html>
 
-/**
- * JSON javob
- */
-function json_(obj) {
-  return ContentService
-    .createTextOutput(JSON.stringify(obj))
-    .setMimeType(ContentService.MimeType.JSON);
-}
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>K-TUNGSTEN — HR Panel</title>
+<style>
+:root{--bg:#080d18;--panel:#101827;--panel2:#111c2d;--line:#26344a;--text:#f5f7fb;--muted:#9aa8bd;--blue:#1672ff;--green:#19a974;--red:#d93636;--yellow:#ffd45a}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#060b15,#080d18);color:var(--text);font-family:Arial,Helvetica,sans-serif}
+button,input,select,textarea{font:inherit}button{border:0;cursor:pointer}.hidden{display:none!important}
+.container{width:min(1250px,94%);margin:28px auto 50px}.topbar{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;margin-bottom:22px}
+.brand h1{margin:0;font-size:30px}.brand p{margin:7px 0 0;color:var(--muted)}.actions{display:flex;gap:10px;flex-wrap:wrap}
+.btn{color:#fff;padding:11px 16px;border-radius:9px;font-weight:700}.btn-blue{background:linear-gradient(135deg,#1d78ff,#0d51c9)}.btn-green{background:var(--green)}.btn-gray{background:#273247}.btn-red{background:var(--red)}.btn:disabled{opacity:.55;cursor:not-allowed}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}.stat{background:var(--panel2);border:1px solid var(--line);border-radius:13px;padding:20px}.stat-title{color:var(--muted);font-size:13px}.stat-number{font-size:31px;font-weight:800;margin-top:8px}
+.card{background:rgba(16,24,39,.96);border:1px solid var(--line);border-radius:14px;padding:20px;margin-bottom:20px;box-shadow:0 14px 35px rgba(0,0,0,.12)}
+.card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:15px;flex-wrap:wrap;margin-bottom:16px}.card-head h2{margin:0;font-size:20px}.card-head p{margin:6px 0 0;color:var(--muted);font-size:13px}
+.controls{display:grid;grid-template-columns:1fr 220px auto;gap:10px;margin-bottom:15px}
+input,select,textarea{width:100%;padding:12px 13px;border-radius:9px;border:1px solid #34445d;background:#0b1321;color:#fff;outline:none}input:focus,select:focus,textarea:focus{border-color:var(--blue)}textarea{min-height:110px;resize:vertical}
+.table-wrap{overflow-x:auto}table{width:100%;border-collapse:collapse;min-width:900px}th{text-align:left;color:var(--muted);font-size:12px;padding:12px;border-bottom:1px solid #29374d}td{padding:13px 12px;border-bottom:1px solid #1e2a3c;vertical-align:top;font-size:13px}tr:hover{background:#121f33}
+.empty{padding:35px;text-align:center;color:var(--muted)}.small{font-size:12px;color:#8190a7}.status{display:inline-block;padding:6px 9px;border-radius:18px;font-size:11px;font-weight:700}.status-active{background:#123c2d;color:#4ce0a4}.status-vacation{background:#3d3211;color:var(--yellow)}.status-fired{background:#3b171b;color:#ff7777}.row-actions{display:flex;gap:6px;flex-wrap:wrap}.row-actions button{padding:7px 9px;border-radius:7px;color:#fff}
+.login{position:fixed;inset:0;background:#080d18;display:flex;align-items:center;justify-content:center;padding:20px;z-index:2000}.login-box{width:min(430px,100%);background:var(--panel);border:1px solid #2b3b55;border-radius:16px;padding:30px}.login-box h1{margin:0 0 8px}.login-box p{color:var(--muted);margin:0 0 18px}.login-error{display:none;color:#ff7777;margin-top:10px;font-size:13px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;padding:20px;z-index:1500}.modal.show{display:flex}.modal-box{width:min(680px,100%);max-height:90vh;overflow:auto;background:var(--panel);border:1px solid #30405a;border-radius:15px;padding:24px}.modal-box h2{margin:0 0 18px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}.form-group{display:flex;flex-direction:column;gap:7px}.form-group.full{grid-column:1/-1}.form-group label{font-size:12px;color:#aebbd0}.modal-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:16px;flex-wrap:wrap}
+.application-details{margin-top:6px;padding:10px;border:1px solid #22334a;border-radius:9px;background:#0b1321;line-height:1.6}.application-details summary{cursor:pointer;color:#58a0ff}
+.notice{margin:0 0 12px;padding:11px 13px;border-radius:9px;font-size:12px;background:#0b1321;border:1px solid #23344c;color:#aebbd0}.notice.error{color:#ff8d8d;border-color:#57252b}.notice.ok{color:#7be3b7;border-color:#1e4a3c}.cv-link{color:#58a0ff;text-decoration:none;font-weight:700}
+@media(max-width:900px){.stats{grid-template-columns:repeat(2,1fr)}.controls{grid-template-columns:1fr}}@media(max-width:600px){.stats{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.container{width:92%}}
+</style>
+</head>
+<body>
 
-/**
- * HTML orqali parent oynaga xabar yuborish
- */
-function htmlMessage_(message) {
-  const safeJson = JSON.stringify(message)
-    .replace(/<\/script/gi, "<\\/script");
+<div class="login" id="loginScreen">
+  <div class="login-box">
+    <h1>🔐 K-TUNGSTEN</h1>
+    <p>HR paneliga kirish</p>
+    <input id="adminPassword" type="password" placeholder="Admin kaliti">
+    <button class="btn btn-blue" id="loginBtn" style="width:100%;margin-top:12px">Kirish</button>
+    <div class="login-error" id="loginError">Admin kaliti noto‘g‘ri!</div>
+  </div>
+</div>
 
-  const html =
-    "<!doctype html>" +
-    "<html>" +
-    "<head><meta charset='UTF-8'></head>" +
-    "<body>" +
-    "<script>" +
-    "window.top.postMessage(" +
-    safeJson +
-    ", '*');" +
-    "</script>" +
-    "</body>" +
-    "</html>";
+<main class="container">
+  <div class="topbar">
+    <div class="brand"><h1>K-TUNGSTEN</h1><p>HR — xodimlar boshqaruv paneli</p></div>
+    <div class="actions">
+      <button class="btn btn-green" id="addEmployeeBtn">+ Xodim qo‘shish</button>
+      <button class="btn btn-blue" id="addVacancyBtn">+ Vakansiya qo‘shish</button>
+      <button class="btn btn-gray" id="logoutBtn">Chiqish</button>
+    </div>
+  </div>
 
-  return HtmlService
-    .createHtmlOutput(html)
-    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
-}
+  <section class="stats">
+    <div class="stat"><div class="stat-title">Jami xodimlar</div><div class="stat-number" id="totalCount">0</div></div>
+    <div class="stat"><div class="stat-title">Faol xodimlar</div><div class="stat-number" id="activeCount">0</div></div>
+    <div class="stat"><div class="stat-title">Ta'tilda</div><div class="stat-number" id="vacationCount">0</div></div>
+    <div class="stat"><div class="stat-title">Ishdan ketgan</div><div class="stat-number" id="firedCount">0</div></div>
+  </section>
 
-/**
- * Google Sheets'dan arizalarni olish
- */
-function getApplications_() {
-  const ss = SpreadsheetApp.openById(SHEET_ID);
-  const sheet = ss.getSheetByName(SHEET_NAME);
+  <section class="card">
+    <div class="card-head"><div><h2>👥 Xodimlar</h2><p>Ichki xodimlar bazasi</p></div></div>
+    <div class="controls">
+      <input id="search" placeholder="🔎 Ism, familiya, lavozim yoki telefon...">
+      <select id="statusFilter"><option value="all">Barcha statuslar</option><option value="active">Faol</option><option value="vacation">Ta'tilda</option><option value="fired">Ishdan ketgan</option></select>
+      <button class="btn btn-gray" id="clearFiltersBtn">Tozalash</button>
+    </div>
+    <div class="table-wrap">
+      <table><thead><tr><th>#</th><th>F.I.Sh.</th><th>Lavozimi</th><th>Telefon</th><th>Ish tajribasi</th><th>Sana</th><th>Status</th><th>Amallar</th></tr></thead><tbody id="employeeRows"></tbody></table>
+      <div class="empty" id="employeeEmpty">Hozircha xodimlar mavjud emas.</div>
+    </div>
+  </section>
 
-  if (!sheet) {
-    throw new Error("Лист1 topilmadi");
-  }
+  <section class="card">
+    <div class="card-head">
+      <div><h2>📩 Kelgan arizalar</h2><p>Sayt orqali yuborilgan nomzodlar</p></div>
+      <button class="btn btn-blue" id="refreshApplicationsBtn">🔄 Yangilash</button>
+    </div>
+    <div class="notice" id="applicationsNotice">Arizalar yuklanmoqda...</div>
+    <div class="table-wrap">
+      <table><thead><tr><th>#</th><th>F.I.Sh.</th><th>Telefon</th><th>Vakansiya</th><th>Sana</th><th>CV</th><th>Ma'lumot</th></tr></thead><tbody id="applicationRows"></tbody></table>
+    </div>
+  </section>
+</main>
 
-  const values = sheet.getDataRange().getDisplayValues();
+<div class="modal" id="employeeModal">
+  <div class="modal-box">
+    <h2 id="employeeModalTitle">Yangi xodim</h2>
+    <div class="form-grid">
+      <div class="form-group"><label>F.I.Sh.</label><input id="employeeName"></div>
+      <div class="form-group"><label>Lavozimi</label><input id="employeeJob"></div>
+      <div class="form-group"><label>Telefon</label><input id="employeePhone" placeholder="+998 90 123 45 67"></div>
+      <div class="form-group"><label>Ish tajribasi</label><input id="employeeExperience"></div>
+      <div class="form-group"><label>Ishga kirgan sana</label><input id="employeeDate" type="date"></div>
+      <div class="form-group"><label>Status</label><select id="employeeStatus"><option value="active">Faol</option><option value="vacation">Ta'tilda</option><option value="fired">Ishdan ketgan</option></select></div>
+      <div class="form-group full"><label>Izoh</label><input id="employeeNote"></div>
+    </div>
+    <div class="modal-actions"><button class="btn btn-gray" id="closeEmployeeBtn">Bekor qilish</button><button class="btn btn-blue" id="saveEmployeeBtn">Saqlash</button></div>
+  </div>
+</div>
 
-  if (values.length <= 1) {
-    return [];
-  }
-
-  return values
-    .slice(1)
-    .filter(function(row) {
-      return row.some(function(cell) {
-        return String(cell).trim() !== "";
-      });
-    })
-    .map(function(row, index) {
-      return {
-        id: index + 1,
-        fullName: row[0] || "",
-        phone: row[1] || "",
-        birthDate: row[2] || "",
-        address: row[3] || "",
-        education: row[4] || "",
-        experience: row[5] || "",
-        about: row[6] || "",
-        vacancy: row[7] || "",
-        date: row[8] || "",
-        cv: row[9] || "",
-        source: row[10] || ""
-      };
-    });
-}
-
-/**
- * GET so'rov
- */
-function doGet(e) {
-  const action =
-    e &&
-    e.parameter &&
-    e.parameter.action
-      ? e.parameter.action
-      : "";
-
-  try {
-
-    // Arizalar
-    if (action === "applications") {
-
-      const applications = getApplications_();
-
-      return htmlMessage_({
-        type: "KT_APPLICATIONS",
-        payload: {
-          success: true,
-          applications: applications
-        }
-      });
-    }
-
-    // Oddiy tekshiruv
-    return json_({
-      success: true,
-      service: "K-TUNGSTEN HR",
-      status: "online"
-    });
-
-  } catch (err) {
-
-    const error =
-      err && err.message
-        ? err.message
-        : String(err);
-
-    // Arizalar so'ralganda
-    if (action === "applications") {
-
-      return htmlMessage_({
-        type: "KT_APPLICATIONS",
-        payload: {
-          success: false,
-          error: error
-        }
-      });
-    }
-
-    // Oddiy xatolik
-    return json_({
-      success: false,
-      error: error
-    });
-  }
-}
+<div class="modal" id="vacancyModal">
+  <div class="modal-box">
+    <h2>Yangi vakansiya qo‘shish</h2>
+    <div class="form-grid">
+      <div class="form-group full"><label>Lavozim</label><input id="vacancyTitle" placeholder="Masalan: Shina montajchisi"></div>
+      <div class="form-group"><label>Manzil</label><input id="vacancyLocation" placeholder="Masalan: Uchquduq
