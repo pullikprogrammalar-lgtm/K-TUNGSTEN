@@ -3,7 +3,7 @@
 // server tomondan xavfsiz uzatadi.
 
 const GOOGLE_APPS_SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycbxEkpJe2_ucfzKHpdb0fDxyScxRaRRc_2sWkWDaOgGGVMvF91v7IYZWuXwR8T0eveFK/exec";
+  "https://script.google.com/macros/s/AKfycbxWY83YzrUruhbap9etNale6PYBKzepFzuWRwZM13DeKyiXdoTdFdCFjTqxvO3sAFcW/exec";
 
 module.exports = async (req, res) => {
   // CORS
