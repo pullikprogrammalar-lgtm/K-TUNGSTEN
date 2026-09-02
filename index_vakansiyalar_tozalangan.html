@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>K-TUNGSTEN | Rasmiy sayt</title>
+<meta name="description" content="K-TUNGSTEN — kompaniyaning rasmiy sayti. Kompaniya haqida ma'lumot, vakansiyalar va karyera imkoniyatlari.">
+<meta name="keywords" content="K-TUNGSTEN, K TUNGSTEN, K-TUNGSTEN Uzbekistan, K-TUNGSTEN kompaniyasi">
+<style>
+:root{--bg:#030d1d;--bg2:#06152c;--card:#071b36;--line:#163a68;--blue:#1672ff;--blue2:#0b4fc5;--text:#f4f7fb;--muted:#a9b8ca;--gold:#d8aa26}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,Arial,sans-serif;overflow-x:hidden}
+::selection{background:#1672ff;color:#fff}
+body:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:999;background:linear-gradient(110deg,transparent 0%,rgba(38,126,255,.025) 45%,transparent 70%);animation:scan 9s linear infinite}
+@keyframes scan{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;background:linear-gradient(120deg,rgba(10,66,145,.12),transparent 40%,rgba(0,105,255,.08));z-index:-1}
+.container{width:min(1180px,92%);margin:auto}a{text-decoration:none;color:inherit}
+header{height:76px;position:sticky;top:0;z-index:50;background:rgba(3,13,29,.88);backdrop-filter:blur(15px);border-bottom:1px solid rgba(55,104,161,.22)}
+.nav{height:100%;display:flex;align-items:center;justify-content:space-between}.brand{display:flex;align-items:center;gap:11px;font-weight:800;font-size:20px;letter-spacing:.3px}.brand img{width:42px;height:42px;object-fit:contain}.brand small{display:block;font-size:7px;letter-spacing:1.6px;color:#86a7d1;margin-top:2px}
+.menu{display:flex;gap:30px;font-size:13px;color:#d6dfeb}.menu a{padding:28px 0;border-bottom:2px solid transparent}.menu a:hover,.menu a.active{color:#fff;border-bottom-color:var(--blue)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;border-radius:8px;padding:13px 20px;font-weight:800;font-size:13px;cursor:pointer;border:1px solid transparent}.btn.blue{background:linear-gradient(135deg,#1d78ff,#0d51c9);color:white;box-shadow:0 8px 25px rgba(10,86,220,.18)}.btn.outline{border-color:#31557e;background:rgba(4,17,35,.45);color:#fff}
+.hero{min-height:610px;display:flex;align-items:center;position:relative;overflow:hidden;background:
+linear-gradient(90deg,#030d1d 0%,rgba(3,13,29,.97) 27%,rgba(3,13,29,.55) 55%,rgba(3,13,29,.18) 100%),
+url("./DJI_0936.png") center/cover}
+.hero:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 60%,#030d1d 100%);z-index:1}
+.hero:after{content:"";position:absolute;right:-8%;bottom:-18%;width:62%;height:100%;background:radial-gradient(ellipse,rgba(14,103,240,.23),transparent 63%);pointer-events:none;animation:pulse 6s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.55;transform:scale(1)}50%{opacity:.95;transform:scale(1.05)}}
+.hero-inner{position:relative;z-index:2;padding:80px 0;animation:heroIn .8s ease both}
+@keyframes heroIn{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}.eyebrow{font-size:13px;color:#5fa0ff;letter-spacing:2px;margin-bottom:15px}.hero h1{font-size:clamp(44px,6vw,76px);line-height:1.02;margin:0 0 20px;max-width:680px;letter-spacing:-2px}.hero h1 span{color:#2f82ff;text-shadow:0 0 28px rgba(47,130,255,.18)}.hero p{max-width:540px;color:#b5c1cf;line-height:1.7;font-size:16px}.hero-actions{display:flex;gap:12px;margin-top:28px}
+.stats{display:flex;gap:42px;margin-top:45px}.stat{border-left:1px solid #23466f;padding-left:18px;transition:.25s}.stat:hover{transform:translateY(-4px);border-color:#3b8dff}.stat b{font-size:25px;display:block}.stat span{font-size:11px;color:var(--muted)}
+.searchbar{margin-top:-42px;position:relative;z-index:5;animation:floatIn .8s .15s ease both;background:rgba(6,25,50,.94);border:1px solid #1c4676;border-radius:15px;padding:14px;display:grid;grid-template-columns:1.5fr 1fr 1fr auto;gap:10px;box-shadow:0 20px 50px #0008}
+@keyframes floatIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.searchbar input,.searchbar select{width:100%;padding:15px;background:#06162c;border:1px solid #1b3e67;border-radius:9px;color:#fff;outline:none}.searchbar button{padding:0 27px}
+section{padding:75px 0}.section-head{display:flex;align-items:end;justify-content:space-between;margin-bottom:27px}.section-head h2{font-size:31px;margin:0}.section-head p{color:var(--muted);margin:7px 0 0}.link{color:#4d9aff;font-size:13px}
+.jobs{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.job{background:linear-gradient(145deg,#071d3b,#06162b);border:1px solid #173b67;border-radius:12px;padding:19px;min-height:250px;display:flex;flex-direction:column}.job{transition:transform .25s,border-color .25s,box-shadow .25s}.job:hover{border-color:#2d72c4;transform:translateY(-5px);box-shadow:0 16px 35px rgba(0,45,105,.25)}.job .new{font-size:9px;background:#0d62d9;padding:4px 7px;border-radius:5px;display:inline-block;width:max-content}.job h3{font-size:17px;line-height:1.25;margin:17px 0 13px}.job .meta{font-size:11px;color:#aabbd0;line-height:2}.job p{font-size:11px;color:#9eafc2;line-height:1.5;flex:1}.job .bottom{border-top:1px solid #183b65;margin-top:12px;padding-top:12px;display:flex;justify-content:space-between;align-items:center}.job .bottom a{color:#3f91ff;font-size:11px;font-weight:800}.arrow{width:34px;height:34px;border-radius:7px;background:#0b5dd7;display:grid;place-items:center}
+.why{background:linear-gradient(180deg,#05152c,#041126);border-top:1px solid #0e2d51;border-bottom:1px solid #0e2d51}.benefits{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}.benefit{text-align:center;padding:23px 10px;border:1px solid #16375f;background:#071a34;border-radius:10px}.benefit .ico{font-size:25px;color:#2982ff;margin-bottom:12px}.benefit b{display:block;font-size:13px;line-height:1.35}.benefit span{display:block;color:#8397ae;font-size:10px;line-height:1.45;margin-top:8px}
+.career{display:grid;grid-template-columns:1fr 1fr;gap:55px;align-items:center}.career h2{font-size:34px;line-height:1.15;margin:0 0 15px}.career p{color:#9fb0c5;line-height:1.65}.numbers{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin:30px 0}.number b{font-size:26px}.number span{display:block;color:#879ab0;font-size:10px;margin-top:5px}.mine-photo{height:300px;border-radius:14px;background:linear-gradient(90deg,rgba(3,14,31,.1),rgba(3,14,31,.1)),url("./DJI_0931.png") center/cover;border:1px solid #20476f;position:relative;overflow:hidden}.mine-photo:after{content:"K-TUNGSTEN";position:absolute;left:25px;bottom:22px;font-size:20px;font-weight:800;letter-spacing:1px}
+.cta{margin-top:65px;border:1px solid #1d4d83;border-radius:15px;overflow:hidden;background:linear-gradient(90deg,#061a35e8,#092c58cc),url("https://images.unsplash.com/photo-1513828583688-c52646db42da?auto=format&fit=crop&w=1500&q=80") center/cover;padding:48px}.cta h2{font-size:31px;margin:0 0 10px}.cta p{color:#b4c2d1;margin:0 0 23px}
+footer{padding:45px 0 25px;border-top:1px solid #123154;background:#020a16}.foot{display:grid;grid-template-columns:2fr 1fr 1fr 1.2fr;gap:35px}.foot p,.foot a{color:#8294aa;font-size:12px;line-height:1.8}.foot h4{margin:0 0 12px}.copy{border-top:1px solid #122b49;margin-top:35px;padding-top:18px;color:#61748b;font-size:10px}
+.modal{display:none;position:fixed;inset:0;background:#000b;z-index:100;align-items:center;justify-content:center;padding:20px}.modal.show{display:flex}.modal-box{width:min(680px,100%);max-height:90vh;overflow:auto;background:#071a34;border:1px solid #24548b;border-radius:16px;padding:28px}.modal-head{display:flex;justify-content:space-between}.close{background:none;border:0;color:#8ca1b9;font-size:27px;cursor:pointer}.form{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px}.field{display:flex;flex-direction:column;gap:6px}.field.full{grid-column:1/-1}.field label{font-size:11px;color:#aabbd0}.field input,.field textarea,.field select{background:#041126;border:1px solid #1b426d;color:white;border-radius:8px;padding:12px}.field textarea{min-height:100px}.form .submit{grid-column:1/-1;margin-top:8px}
+@media(max-width:900px){.menu{display:none}.jobs{grid-template-columns:repeat(2,1fr)}.benefits{grid-template-columns:repeat(3,1fr)}.searchbar{grid-template-columns:1fr 1fr}.searchbar button{padding:14px}.career{grid-template-columns:1fr}.foot{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.hero{min-height:620px}.hero h1{font-size:44px}.stats{gap:18px}.jobs,.benefits,.searchbar{grid-template-columns:1fr}.hero-actions{flex-direction:column;align-items:flex-start}.numbers{grid-template-columns:1fr 1fr}.foot{grid-template-columns:1fr}.searchbar{margin-top:15px}.section-head{display:block}}
+
+.vacancy-modal{display:none;position:fixed;inset:0;background:rgba(0,5,14,.86);backdrop-filter:blur(10px);z-index:110;align-items:center;justify-content:center;padding:18px}.vacancy-modal.show{display:flex}.vacancy-detail{width:min(920px,100%);max-height:92vh;overflow:auto;background:linear-gradient(145deg,#071c38,#041126);border:1px solid #285887;border-radius:18px;box-shadow:0 30px 90px #000b}.detail-top{padding:30px 32px;border-bottom:1px solid #173d67;background:linear-gradient(120deg,rgba(16,96,196,.12),transparent)}.detail-top .eyebrow{margin-bottom:9px}.detail-title{display:flex;justify-content:space-between;gap:20px;align-items:start}.detail-title h2{font-size:31px;line-height:1.15;margin:0}.detail-close{border:1px solid #294d73;background:#081a32;color:#b9c9db;border-radius:8px;width:40px;height:40px;font-size:22px;cursor:pointer}.detail-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}.meta-pill{border:1px solid #21496f;background:#06172e;color:#b8c9dc;padding:8px 11px;border-radius:7px;font-size:11px}.detail-body{display:grid;grid-template-columns:1.45fr .75fr;gap:28px;padding:28px 32px}.detail-body h3{font-size:15px;margin:0 0 12px;color:#fff}.detail-body p,.detail-body li{font-size:12px;line-height:1.75;color:#9fb2c8}.detail-body ul{padding-left:18px;margin-top:0}.apply-box{background:#06172e;border:1px solid #1b426b;border-radius:12px;padding:20px;height:max-content;position:sticky;top:0}.apply-box b{display:block;font-size:16px;margin-bottom:7px}.apply-box span{display:block;color:#8ea2b9;font-size:11px;line-height:1.5;margin-bottom:18px}.apply-box .btn{width:100%}
+@media(max-width:700px){.detail-body{grid-template-columns:1fr}.detail-title h2{font-size:24px}.apply-box{position:static}}
+</style>
+</head>
+<body>
+<header><div class="container nav">
+<a class="brand" href="#"><img src="logo.png" alt="K-TUNGSTEN logo"><div>K-TUNGSTEN<small>RELIABLE. STRONG. TOGETHER</small></div></a>
+<nav class="menu"><a class="active" href="#">Bosh sahifa</a><a href="#about">Biz haqimizda</a><a href="#career">Karyera</a><a href="#jobs">Vakansiyalar</a><a href="#contact">Aloqa</a></nav>
+<a class="btn outline" href="hr.html">HR PANEL →</a>
+</div></header>
+
+<section class="hero"><div class="container hero-inner">
+<div class="eyebrow">KARYERA</div>
+<h1>KELAJAKNI<br><span>BIZ BILAN QURING</span></h1>
+<p>K-TUNGSTEN — barqaror rivojlanish va yuqori natijalarga intiluvchi jamoa. Agar siz ham biz bilan birga o‘sishni istasangiz, o‘zingizga mos imkoniyatni toping.</p>
+<div class="hero-actions"><a class="btn blue" href="#jobs">VAKANSIYALARNI KO‘RISH →</a><a class="btn outline" href="#about">KOMPANIYA HAQIDA →</a></div>
+<div class="stats"><div class="stat"><b>500+</b><span>Jamoa a’zolari</span></div><div class="stat"><b>10+</b><span>Yillik tajriba</span></div><div class="stat"><b>100%</b><span>Xavfsizlik ustuvor</span></div><div class="stat"><b>24/7</b><span>Barqaror ishlab chiqarish</span></div></div>
+</div><div style="position:absolute;right:7%;top:24%;width:90px;height:90px;border:1px solid rgba(45,130,255,.35);border-radius:50%;z-index:2;box-shadow:0 0 50px rgba(20,105,255,.12)"></div>
+<div style="position:absolute;right:11%;top:31%;width:8px;height:8px;background:#2f82ff;border-radius:50%;z-index:2;box-shadow:0 0 20px #2f82ff"></div>
+</section>
+
+<section id="jobs"><div class="container">
+<div class="section-head"><div><div class="eyebrow">K-TUNGSTEN KARYERA</div><h2>OCHIQ VAKANSIYALAR</h2><p>Lavozimni tanlang va batafsil ma’lumotni ko‘ring.</p></div><div class="link" id="resultCount"></div></div>
+<div class="searchbar" style="margin:0 0 28px;box-shadow:none">
+<input id="q" placeholder="⌕  Lavozim nomini qidiring...">
+<select id="loc"><option value="">Joylashuv — Barchasi</option><option>Uchquduq</option><option>Navoiy</option></select>
+<select id="exp"><option value="">Tajriba — Barchasi</option><option>1–3 yil</option><option>2+ yil</option><option>3+ yil</option></select>
+<button class="btn blue" onclick="render()">QIDIRISH →</button>
+</div>
+<div class="jobs" id="jobsList"></div>
+</div></section>
+
+<section class="why" id="about"><div class="container"><div class="section-head"><div><h2>NIMA UCHUN K-TUNGSTEN?</h2><p>Xodimlarimiz uchun muhim bo‘lgan sharoitlar.</p></div></div><div class="benefits">
+<div class="benefit"><div class="ico">◉</div><b>3 mahal issiq ovqat</b><span>To‘liq va sifatli ovqatlanish</span></div>
+<div class="benefit"><div class="ico">▣</div><b>O‘z vaqtida maosh</b><span>Barqaror to‘lov tizimi</span></div>
+<div class="benefit"><div class="ico">▰</div><b>Avtobus servisi</b><span>Ish joyiga qatnov</span></div>
+<div class="benefit"><div class="ico">♧</div><b>Hamjihat jamoa</b><span>Professional muhit</span></div>
+<div class="benefit"><div class="ico">↗</div><b>O‘sish imkoniyati</b><span>Karyera rivoji</span></div>
+<div class="benefit"><div class="ico">▤</div><b>Mehnat ta’tillari</b><span>Qonunchilikka muvofiq</span></div>
+</div></div></section>
+
+<section id="career"><div class="container career"><div><div class="eyebrow">K-TUNGSTEN KARYERA</div><h2>NIMA UCHUN BIZ BILAN KARYERA QURISHINGIZ KERAK?</h2><p>Bizning maqsadimiz — yuqori natijalarga erishish bilan birga, har bir xodim uchun xavfsiz, barqaror va rivojlantiruvchi muhit yaratish.</p><div class="numbers"><div class="number"><b>500+</b><span>Xodimlar</span></div><div class="number"><b>10+</b><span>Tajriba</span></div><div class="number"><b>100%</b><span>Xavfsizlik</span></div><div class="number"><b>24/7</b><span>Ishlab chiqarish</span></div></div><a class="btn outline" href="#about">KO‘PROQ MA’LUMOT →</a></div><div class="mine-photo"></div></div>
+<div class="container"><div class="cta"><h2>O‘Z KARYERANGIZNI YANGI BOSQICHGA KO‘TARING!</h2><p>Jamoamizga qo‘shiling va kelajakni biz bilan birga yarating.</p><a class="btn blue" href="#jobs">ARIZA TOPSHIRISH →</a></div></div></section>
+
+<footer id="contact"><div class="container foot"><div><a class="brand" href="#"><img src="logo.png" alt="K-TUNGSTEN logo"><div>K-TUNGSTEN<small>RELIABLE. STRONG. TOGETHER</small></div></a><p>Biz tabiiy resurslarni qazib olish va qayta ishlash sohasida ishonchli hamkor bo‘lishga intilamiz.</p></div><div><h4>Kompaniya</h4><a href="#about">Biz haqimizda</a><br><a href="#career">Karyera</a><br><a href="#jobs">Vakansiyalar</a></div><div><h4>Karyera</h4><a href="#jobs">Ochiq vakansiyalar</a><br><a href="#jobs">Ariza topshirish</a></div><div><h4>Biz bilan bog‘laning</h4><p>📍 Navoiy viloyati,<br>Uchquduq tumani,<br>Ko‘kpatas MFY</p><p>✉ HR bo‘limi</p></div></div><div class="container copy">© 2026 K-TUNGSTEN. Barcha huquqlar himoyalangan.</div></footer>
+
+
+<div class="vacancy-modal" id="vacancyModal"><div class="vacancy-detail">
+<div class="detail-top"><div class="detail-title"><div><div class="eyebrow">OCHIQ VAKANSIYA</div><h2 id="detailTitle"></h2><div class="detail-meta" id="detailMeta"></div></div><button class="detail-close" onclick="closeDetail()">×</button></div></div>
+<div class="detail-body"><div><h3>Lavozim haqida</h3><p id="detailDesc"></p><h3 style="margin-top:25px">Asosiy vazifalar</h3><ul id="detailTasks"></ul><h3 style="margin-top:25px">Talablar</h3><ul id="detailRequirements"></ul></div>
+<div class="apply-box"><b>Bu lavozim sizga mosmi?</b><span>Arizangizni onlayn yuboring. HR bo‘limi ma’lumotlaringizni ko‘rib chiqadi.</span><button class="btn blue" id="detailApply">ARIZA TOPSHIRISH →</button></div></div>
+</div></div>
+<div class="modal" id="modal"><div class="modal-box"><div class="modal-head"><div><div class="eyebrow">ARIZA TOPSHIRISH</div><h2 id="modalTitle">Vakansiya</h2></div><button class="close" onclick="closeModal()">×</button></div>
+<form class="form" id="form"><input type="hidden" id="job">
+<div class="field"><label>F.I.Sh. *</label><input id="name" required></div><div class="field"><label>Telefon *</label><input id="phone" required placeholder="+998"></div>
+<div class="field"><label>Tug‘ilgan sana</label><input id="birth" type="date"></div><div class="field"><label>Yashash manzili</label><input id="address"></div>
+<div class="field"><label>Ma’lumoti</label><input id="edu"></div><div class="field"><label>Ish tajribasi</label><input id="experience"></div>
+<div class="field full"><label>O‘zingiz haqingizda</label><textarea id="aboutme"></textarea></div><div class="field full"><label>CV</label><input type="file" accept=".pdf,.doc,.docx"></div>
+<button class="btn blue submit">ARIZANI YUBORISH →</button></form></div></div>
+<script>
+/* =========================================================
+   K-TUNGSTEN — YAGONA VAKANSIYA TIZIMI
+   HR PANEL -> localStorage -> Asosiy sayt
+   ========================================================= */
+
+const staticVacancies = [];
+
+/* Eski vakansiyalarni bir marta tozalash — yangi tizim uchun boshlang‘ich holat */
+const VACANCY_RESET_KEY = "ktungsten_vacancies_reset_2026_09_02";
+if (!localStorage.getItem(VACANCY_RESET_KEY)) {
+  localStorage.removeItem("ktungsten_vacancies");
+  localStorage.setItem(VACANCY_RESET_KEY, "1");
+}
+
+/* HR PANELdan keladigan vakansiyalar */
+function getHRVacancies() {
+  try {
+    const raw = JSON.parse(localStorage.getItem("ktungsten_vacancies") || "[]");
+    if (!Array.isArray(raw)) return [];
+
+    return raw
+      .filter(v => v && (v.status === "active" || !v.status))
+      .map((v, index) => ({
+        id: v.id || ("hr-" + index + "-" + Date.now()),
+        title: v.title || "Nomsiz vakansiya",
+        location: v.location || "Uchquduq",
+        exp: v.experience || v.exp || "Talab qilinmaydi",
+        type: v.type || "To‘liq stavka",
+        salary: v.salary || "Suhbat asosida",
+        desc: v.description || v.desc || "Vakansiya haqida ma’lumot HR bo‘limi tomonidan kiritiladi.",
+        tasks: Array.isArray(v.tasks) ? v.tasks : [],
+        req: Array.isArray(v.requirements) ? v.requirements : (Array.isArray(v.req) ? v.req : []),
+        new: !!v.new,
+        fromHR: true
+      }));
+  } catch (error) {
+    console.error("HR vakansiyalarini o‘qishda xatolik:", error);
+    return [];
+  }
+}
+
+/* HR vakansiyalarini birinchi o‘ringa qo‘yib, eski static vakansiyalarni ham saqlaymiz.
+   Bir xil title bo‘lsa, HRdagi versiya ustun bo‘ladi. */
+function getAllVacancies() {
+  const hr = getHRVacancies();
+  const titles = new Set(hr.map(v => v.title.trim().toLowerCase()));
+  const staticList = staticVacancies.filter(
+    v => !titles.has(v.title.trim().toLowerCase())
+  );
+  return [...hr, ...staticList];
+}
+
+let vacancies = [];
+
+/* HTMLga xavfsiz chiqarish */
+function esc(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+/* Vakansiyalarni chiqarish */
+function render() {
+  vacancies = getAllVacancies();
+
+  const q = document.getElementById("q").value.trim().toLowerCase();
+  const l = document.getElementById("loc").value;
+  const e = document.getElementById("exp").value;
+
+  const filtered = vacancies.filter(v =>
+    (!q || v.title.toLowerCase().includes(q)) &&
+    (!l || v.location === l) &&
+    (!e || v.exp === e)
+  );
+
+  document.getElementById("resultCount").textContent =
+    filtered.length + " ta vakansiya";
+
+  const container = document.getElementById("jobsList");
+
+  if (!filtered.length) {
+    container.innerHTML =
+      "<p style='color:#8da0b7'>Mos vakansiya topilmadi.</p>";
+    return;
+  }
+
+  container.innerHTML = filtered.map(v => `
+    <article class="job">
+      ${v.new ? '<span class="new">YANGI</span>' : ''}
+      <h3>${esc(v.title)}</h3>
+      <div class="meta">
+        ⌖ ${esc(v.location)}, Navoiy viloyati<br>
+        ◷ ${esc(v.exp)} tajriba<br>
+        ▣ ${esc(v.type)}
+      </div>
+      <p>${esc(v.desc)}</p>
+      <div class="bottom">
+        <a href="#" onclick="openDetail('${esc(v.id)}');return false">BATAFSIL →</a>
+        <a class="arrow" href="#" onclick="openDetail('${esc(v.id)}');return false">→</a>
+      </div>
+    </article>
+  `).join("");
+}
+
+/* Batafsil oynasini ochish */
+function openDetail(id) {
+  vacancies = getAllVacancies();
+
+  const v = vacancies.find(x => String(x.id) === String(id));
+  if (!v) return;
+
+  document.getElementById("detailTitle").textContent = v.title;
+  document.getElementById("detailDesc").textContent = v.desc;
+
+  document.getElementById("detailMeta").innerHTML = `
+    <span class="meta-pill">⌖ ${esc(v.location)}</span>
+    <span class="meta-pill">◷ ${esc(v.exp)}</span>
+    <span class="meta-pill">▣ ${esc(v.type)}</span>
+    <span class="meta-pill">💰 ${esc(v.salary)}</span>
+  `;
+
+  const tasks = document.getElementById("detailTasks");
+  tasks.innerHTML = (v.tasks && v.tasks.length)
+    ? v.tasks.map(x => `<li>${esc(x)}</li>`).join("")
+    : "<li>Vazifalar ma’lumoti HR bo‘limi tomonidan beriladi.</li>";
+
+  const req = document.getElementById("detailRequirements");
+  req.innerHTML = (v.req && v.req.length)
+    ? v.req.map(x => `<li>${esc(x)}</li>`).join("")
+    : "<li>Talablar vakansiya bo‘yicha belgilanadi.</li>";
+
+  document.getElementById("detailApply").onclick = () => {
+    closeDetail();
+    openModal(v.id);
+  };
+
+  document.getElementById("vacancyModal").classList.add("show");
+  document.body.style.overflow = "hidden";
+}
+
+function closeDetail() {
+  document.getElementById("vacancyModal").classList.remove("show");
+  if (!document.getElementById("modal").classList.contains("show")) {
+    document.body.style.overflow = "";
+  }
+}
+
+/* Ariza oynasini ochish */
+function openModal(id) {
+  vacancies = getAllVacancies();
+
+  const v = vacancies.find(x => String(x.id) === String(id));
+  if (!v) return;
+
+  document.getElementById("modalTitle").textContent = v.title;
+  document.getElementById("job").value = v.title;
+  document.getElementById("modal").classList.add("show");
+  document.body.style.overflow = "hidden";
+}
+
+function closeModal() {
+  document.getElementById("modal").classList.remove("show");
+  if (!document.getElementById("vacancyModal").classList.contains("show")) {
+    document.body.style.overflow = "";
+  }
+}
+
+/* =========================================================
+   ARIZANI GOOGLE APPS SCRIPT -> GOOGLE SHEETS -> TELEGRAMGA YUBORISH
+   ========================================================= */
+
+const HR_API_URL = "https://script.google.com/macros/s/AKfycbxOH_jZNzmP60aidplfRsSjBeyAq0FDwxuGS1QrGMRh3_Ppwb2TmiaZJO1BPpOlZYqf/exec";
+
+function fileToBase64(file) {
+  return new Promise((resolve, reject) => {
+    if (!file) {
+      resolve(null);
+      return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      try {
+        const result = String(reader.result || "");
+        const commaIndex = result.indexOf(",");
+
+        if (commaIndex === -1) {
+          reject(new Error("CV fayli o‘qilmadi."));
+          return;
+        }
+
+        resolve({
+          name: file.name,
+          type: file.type || "application/octet-stream",
+          data: result.substring(commaIndex + 1)
+        });
+      } catch (error) {
+        reject(error);
+      }
+    };
+
+    reader.onerror = () => reject(new Error("CV faylini o‘qishda xatolik."));
+    reader.readAsDataURL(file);
+  });
+}
+
+document.getElementById("form").addEventListener("submit", async function(e) {
+  e.preventDefault();
+
+  const form = this;
+  const submitButton = form.querySelector(".submit");
+  const fileInput = document.querySelector('#form input[type="file"]');
+  const file = fileInput && fileInput.files.length
+    ? fileInput.files[0]
+    : null;
+
+  /* Apps Script-ga yuborilayotgan ma’lumot */
+  const application = {
+    name: document.getElementById("name").value.trim(),
+    phone: document.getElementById("phone").value.trim(),
+    birth: document.getElementById("birth").value,
+    address: document.getElementById("address").value.trim(),
+    education: document.getElementById("edu").value.trim(),
+    experience: document.getElementById("experience").value.trim(),
+    about: document.getElementById("aboutme").value.trim(),
+    job: document.getElementById("job").value,
+    source: "K-TUNGSTEN rasmiy sayti",
+    cv: null
+  };
+
+  try {
+    /* Yuklangan CV bo‘lsa, Base64 ko‘rinishida yuboramiz */
+    if (file) {
+      const maxSize = 7 * 1024 * 1024;
+
+      if (file.size > maxSize) {
+        throw new Error("CV fayli 7 MB dan katta bo‘lmasligi kerak.");
+      }
+
+      application.cv = await fileToBase64(file);
+    }
+
+    submitButton.disabled = true;
+    submitButton.textContent = "YUBORILMOQDA...";
+
+    const response = await fetch(HR_API_URL, {
+      method: "POST",
+      body: JSON.stringify(application),
+      redirect: "follow"
+    });
+
+    const raw = await response.text();
+
+    let result;
+
+    try {
+      result = JSON.parse(raw);
+    } catch (_) {
+      throw new Error("Serverdan noto‘g‘ri javob qaytdi.");
+    }
+
+    if (!result.success) {
+      throw new Error(result.error || "Ariza yuborilmadi.");
+    }
+
+    alert(
+      "✅ Arizangiz muvaffaqiyatli yuborildi!\n\n" +
+      "Ariza ID: " + (result.id || "—")
+    );
+
+    form.reset();
+    closeModal();
+
+  } catch (error) {
+    console.error("Ariza yuborishda xatolik:", error);
+
+    alert(
+      "❌ Arizani yuborishda xatolik yuz berdi.\n\n" +
+      (error && error.message ? error.message : "Noma’lum xatolik")
+    );
+
+  } finally {
+    submitButton.disabled = false;
+    submitButton.textContent = "ARIZANI YUBORISH →";
+  }
+});
+
+/* Qidiruv */
+document.getElementById("q").addEventListener("input", render);
+document.getElementById("loc").addEventListener("change", render);
+document.getElementById("exp").addEventListener("change", render);
+
+/* Tashqarisini bosganda modalni yopish */
+window.addEventListener("click", function(e) {
+  if (e.target.id === "modal") closeModal();
+  if (e.target.id === "vacancyModal") closeDetail();
+});
+
+/* HR Panel boshqa oynada o‘zgartirilsa, saytni yangilash */
+window.addEventListener("storage", function(e) {
+  if (e.key === "ktungsten_vacancies") {
+    render();
+  }
+});
+
+/* Birinchi yuklanish */
+document.addEventListener("DOMContentLoaded", render);
+
+/* Scroll animatsiyasi */
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.style.opacity = "1";
+      e.target.style.transform = "translateY(0)";
+      revealObserver.unobserve(e.target);
+    }
+  });
+}, {threshold:.08});
+
+document.querySelectorAll("section .section-head,.benefit,.career>div,.cta")
+  .forEach(el => {
+    el.style.opacity = "0";
+    el.style.transform = "translateY(18px)";
+    el.style.transition = "opacity .65s ease,transform .65s ease";
+    revealObserver.observe(el);
+  });
+</script>
+</body>
+</html>
