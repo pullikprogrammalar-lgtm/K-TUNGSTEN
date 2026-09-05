@@ -106,11 +106,11 @@ footer{padding:45px 0 25px;border-top:1px solid #123154;background:#020a16}.foot
    ========================================================= */
 
 const staticVacancies = [
-  {
-    
-    ]
-  }
-];
+  {const VACANCY_RESET_KEY = "ktungsten_vacancies_reset_2026_09_02";
+if (!localStorage.getItem(VACANCY_RESET_KEY)) {
+  localStorage.removeItem("ktungsten_vacancies");
+  localStorage.setItem(VACANCY_RESET_KEY, "1");
+}
 
 /* HR PANELdan keladigan vakansiyalar */
 function getHRVacancies() {
