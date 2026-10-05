@@ -1225,7 +1225,14 @@ Talablar
 
 <ul id="detailRequirements"></ul>
 
-</div>
+
+      <h3 style="margin-top:25px">
+Sizga
+</h3>
+
+      <ul id="detailBenefits"></ul>
+
+      </div>
 
 
 <div class="apply-box">
@@ -1418,6 +1425,55 @@ const vacancies = [
     "Belgilangan hududda tozalik va tartibni ta’minlash"
   ]
 }
+,
+{
+  id:"bino-tozalovchi",
+
+  title:"Bino tozalovchi ayol (УБОРЩИЦА ТЕРРИТОРИИ И ПОМЕЩЕНИЙ)",
+
+  location:"Uchquduq",
+
+  exp:"Talab qilinmaydi",
+
+  type:"6/1, 8 soatlik smena",
+
+  salary:"3 000 000 so‘m",
+
+  new:true,
+
+  map:"https://yandex.com/maps/?ll=64.038919%2C42.156595&z=16&pt=64.038919%2C42.156595",
+
+  desc:
+    "Navoiy viloyati, Uchquduq tumani, Southbay loyihasidagi vaxta posyolkasida turar joylar va xizmat xonalarining tozaligi hamda sanitariya holatini ta’minlash.",
+
+  tasks:[
+    "Yotoqxonalar yoki modulli vagon-uylardagi xonalarni quruq va nam tozalash",
+    "Dushxonalar, hojatxonalar, yuvinish xonalari va yo‘laklarni muntazam dezinfeksiya qilish",
+    "Oshxona, ma’muriy modullar, kir yuvish va quritish xonalarini tartibga keltirish",
+    "Vaxtachilarning choyshablarini yig‘ish, saralash, zarurat bo‘lsa yuvish va muntazam almashtirish",
+    "Professional yuvish va dezinfeksiyalovchi vositalardan to‘g‘ri foydalanish va ularni belgilangan me’yorlarda dozalash"
+  ],
+
+  req:[
+    "Amaldagi tibbiy daftarcha mavjudligi",
+    "Majburiy shimoliy/vaxta tibbiy ko‘rigidan o‘tganlik",
+    "Uzoq Shimol yoki unga tenglashtirilgan joylarda ishlashga qarshi ko‘rsatmalarning yo‘qligi",
+    "Smenada 8 soat davomida jismoniy mehnat qilishga tayyorlik",
+    "Intizomlilik, nizolarga berilmaslik va ozodalik",
+    "Katta jamoa bilan til topishish qobiliyati",
+    "Vaxta posyolkasining yopiq muhitida stressga chidamlilik",
+    "Ish tajribasi talab qilinmaydi, ammo tozalash, mehmonxona yoki shunga o‘xshash vaxta obyektlaridagi tajriba afzal"
+  ],
+
+  benefits:[
+    "O‘z vaqtida maosh — 3 000 000 so‘m",
+    "Rasmiy ishga qabul qilish",
+    "6/1 ish grafigi",
+    "Zamonaviy ish sharoitlari",
+    "Professional jamoada ishlash imkoniyati",
+    "Karyera o‘sishi imkoniyati"
+  ]
+}
 
 ];
 
@@ -1589,7 +1645,15 @@ function openDetail(id){
         💰 ${esc(v.salary)}
       </span>
 
-    `;
+    
+      ${
+        v.map
+          ? `<a class="meta-pill" href="${esc(v.map)}" target="_blank" rel="noopener">
+              📍 Yandex Xarita
+            </a>`
+          : ""
+      }
+`;
 
 
   document.getElementById("detailTasks")
@@ -1606,7 +1670,14 @@ function openDetail(id){
       .join("");
 
 
-  document.getElementById("detailApply").onclick =
+  
+  document.getElementById("detailBenefits")
+    .innerHTML =
+      (v.benefits || [])
+      .map(x => `<li>${esc(x)}</li>`)
+      .join("");
+
+document.getElementById("detailApply").onclick =
     function(){
 
       closeDetail();
